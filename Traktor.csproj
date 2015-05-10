@@ -63,10 +63,28 @@
     </Page>
     <Compile Include="Algorithms\AStar.cs" />
     <Compile Include="Algorithms\RAM.cs" />
+    <Compile Include="Interface\ICiagnik.cs" />
+    <Compile Include="Interface\IRoslina.cs" />
+    <Compile Include="Model\MaszynaRolnicza\Brona.cs" />
+    <Compile Include="Model\MaszynaRolnicza\Deszczownica.cs" />
+    <Compile Include="Model\MaszynaRolnicza\Plug.cs" />
+    <Compile Include="Model\Mapa\Podpole.cs" />
+    <Compile Include="Model\Mapa\Pole.cs" />
+    <Compile Include="Model\Roslina\Chwast.cs" />
+    <Compile Include="Interface\IMaszynaRolnicza.cs" />
+    <Compile Include="Model\MaszynaRolnicza\MaszynaRolnicza.cs" />
+    <Compile Include="Model\Roslina\Roslina.cs" />
+    <Compile Include="Model\Roslina\RoslinaUprawna.cs" />
+    <Compile Include="Model\MaszynaRolnicza\RozrzutnikNawozu.cs" />
+    <Compile Include="Model\MaszynaRolnicza\Sadzarka.cs" />
+    <Compile Include="Model\MaszynaRolnicza\Siewnik.cs" />
+    <Compile Include="Model\CzarnaSkrzynka.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\MaszynaRolnicza\Traktor.cs" />
+    <Compile Include="Model\Zasob\Substancja.cs" />
     <Compile Include="Traktor.cs" />
     <Compile Include="Commons\Controls.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -109,6 +127,7 @@
   <ItemGroup>
     <Resource Include="Images\tractor.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
