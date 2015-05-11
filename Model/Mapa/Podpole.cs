@@ -13,7 +13,7 @@ namespace TraktorProj.Model
 
         private Dictionary<Substancja, int> zasoby;
 
-        public readonly Dictionary<Substancja, int> Zasoby
+        public Dictionary<Substancja, int> Zasoby
         {
             get { return zasoby; }
         }

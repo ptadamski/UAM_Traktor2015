@@ -8,5 +8,10 @@ namespace TraktorProj.Model
 {
     public class RoslinaUprawna : Roslina
     {
+        public RoslinaUprawna() :
+            base()
+        {
+
+        }
     }  
 }

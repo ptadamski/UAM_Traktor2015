@@ -9,6 +9,11 @@ namespace TraktorProj.Model
 {
     public abstract class MaszynaRolnicza : IMaszynaRolnicza
     {
+        public MaszynaRolnicza()
+        {
+            this.traktor = null;
+        }
+
         public MaszynaRolnicza(Traktor traktor)
         {
             this.traktor = traktor;

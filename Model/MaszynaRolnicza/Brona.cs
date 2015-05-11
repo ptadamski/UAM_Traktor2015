@@ -8,7 +8,7 @@ namespace TraktorProj.Model
 {
     //composite: leaf
     public class Brona : MaszynaRolnicza
-    {
+    {         
         public override void pracuj()
         {
             throw new NotImplementedException();

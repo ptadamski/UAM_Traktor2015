@@ -11,7 +11,16 @@ namespace TraktorProj.Model
     {
         public enum Stadium { Brak = 5, Nasiono = 0, Mloda, Dojrzala, Przekwitla, Martwa }
 
-        public Roslina(Dictionary<Substancja, float> zapasy, Dictionary<Substancja, float> wymaganiaZyciowe, Stadium stadiumZycia)
+        public Roslina()
+        {
+            this.wymaganiaZyciowe = new Dictionary<Substancja,float>();
+            this.zapasy = new Dictionary<Substancja,float>();
+            this.stadiumZycia = Stadium.Nasiono; //level   
+            this.etapZycia = 0;//dowiadczenie
+        }
+
+        public Roslina(Dictionary<Substancja, float> zapasy, 
+            Dictionary<Substancja, float> wymaganiaZyciowe, Stadium stadiumZycia)
         {
             this.wymaganiaZyciowe = wymaganiaZyciowe;
             this.zapasy = zapasy;
@@ -33,9 +42,39 @@ namespace TraktorProj.Model
 
         private Dictionary<Substancja, float> wymaganiaZyciowe;
 
-        public readonly Dictionary<Substancja, float> WymaganiaZyciowe
+        public Dictionary<Substancja, float> WymaganiaZyciowe
         {
             get { return wymaganiaZyciowe; }
+        }
+
+        public void zyj(TimeSpan czas, Podpole miejsce)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void gin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void wprowadz(Dictionary<Substancja, int> substancje)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void rosnij(Podpole miejsce)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void rozmnazaj(Podpole miejsce, IRoslina potomek)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void wydzielaj(Podpole miejsce, out Dictionary<Substancja, int> metabolity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

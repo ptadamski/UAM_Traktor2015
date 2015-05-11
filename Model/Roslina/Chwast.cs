@@ -8,5 +8,11 @@ namespace TraktorProj.Model
 {
     public class Chwast : Roslina
     {
+        public Chwast():
+            base()
+        {
+
+        }
+
     }
 }

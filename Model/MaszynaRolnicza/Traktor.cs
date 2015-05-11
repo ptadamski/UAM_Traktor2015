@@ -9,9 +9,10 @@ using TraktorProj.Interface;
 namespace TraktorProj.Model
 {
     //composite: compisite
-    public class Traktor : ICiagnik
+    public class Traktor : MaszynaRolnicza, ICiagnik
     {
-        public Traktor(int maxLiczbaMaszyn, Pole pole)
+        public Traktor(int maxLiczbaMaszyn, Pole pole) :
+            base(null)
         {
             this.maxLiczbaMaszyn = maxLiczbaMaszyn;
             this.pole = pole;
@@ -41,7 +42,7 @@ namespace TraktorProj.Model
             set { maxCzasPracy = value; }
         }
 
-        private List<IMaszynaRolnicza> maszynyRolnicze;
+        private List<IMaszynaRolnicza> maszynyRolnicze = new List<IMaszynaRolnicza>();
 
         public double X
         {
@@ -63,11 +64,12 @@ namespace TraktorProj.Model
 
         public void idz(Kierunek kierunek)
         {
+            //AStar
             paliwo -= 1;
             pole.przesun(kierunek, ref pozycja); ;
         }
 
-        public void pracuj()
+        public override void pracuj()
         {
             foreach (var maszyna in maszynyRolnicze)
             {
