@@ -14,12 +14,12 @@ namespace TraktorProj
 {
     class Traktor
     {
-        private List<Point> orderList, orderLists, way; 
+
 
 
         private Controls controls;
         private static Traktor traktor;
-        private List<string> Times; 
+        private int targetX, targetY;
 
 
 
@@ -38,8 +38,8 @@ namespace TraktorProj
 
         public Traktor()
         {
-       
-        
+
+            controls = new Controls();
   
 
  
@@ -50,8 +50,10 @@ namespace TraktorProj
 
 
 
-        public void StartTraktor()
+        public void StartTraktor(int x, int y)
         {
+            targetX = x;
+            targetY = y;
             Thread startThread = new Thread(TraktorThread);
             startThread.IsBackground = true;
 
@@ -59,19 +61,70 @@ namespace TraktorProj
 
 
         }
-
+      
         private void TraktorThread()
         {
 
-            while (true)
-            {
+        
+
+                 /* AStar */
+                    AStar astar = new AStar();
+
+                    AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetX, targetY,0);
+                    AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, controls.posX, controls.posY,1);
+                    StartNode.GoalNode = GoalNode;
+
+                    astar.FindPath(StartNode, GoalNode);
+                    /* AStar */
+                    AStarNode2D point0 = (AStarNode2D)astar.Solution[0];
+                    astar.Solution.RemoveAt(0);
+
+                        foreach (AStarNode2D point in astar.Solution)
+                        {
+                          
+                            int dir = point.DIR;
+                            Thread.Sleep(600);
+
+               
+                            if (dir == 3)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveLeft()));
+                            }
+                            else if (dir == 1)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveRight()));
+                            }
+                            else if (dir == 2)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveDown()));
+                            }
+                            else if (dir == 0)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveUp()));
+
+                            }
+
+
+
+                          
+                        }
+
+                       
+            
+                      
                 
-                //tutaj dzialanie
+
+              
             }
-        }
+     }
 
 
-
-
-    }
 }

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using TraktorProj.Commons;
+using TraktorProj.Algorithms;
 
 
 namespace TraktorProj
@@ -25,7 +26,7 @@ namespace TraktorProj
     public partial class MainWindow : Window
     {
         private Controls controls;
-
+       
         private List<string> comandsList; 
         public MainWindow()
         {
@@ -53,7 +54,8 @@ namespace TraktorProj
                 }
                 else if (ConsoleInTextBox.Text == "start" || ConsoleInTextBox.Text == "Start")
                 {
-                    Traktor.Instance.StartTraktor();
+                    ConsoleOutTextBlock.Text += "\r\n> " + "started";
+                   // Traktor.Instance.StartTraktor();
                 }
                 else if(ConsoleInTextBox.Text == "help")
                 {
@@ -78,9 +80,34 @@ namespace TraktorProj
                 {
                     controls.TractorMooveUp();
                 }
-                else if (ConsoleInTextBox.Text == "go")
+                else if (ConsoleInTextBox.Text.Contains("go"))
                 {
-                    controls.TractorMoveTo(5, 5);
+                    string[] words = ConsoleInTextBox.Text.Split(' ');
+                    if (words.Length == 3)
+                    {
+                        int tarX = Int32.Parse(words[1]);
+                        int tarY = Int32.Parse(words[2]);
+
+                        if (MainClass.GetMap(tarX, tarY) > 0)
+                        {
+                            ConsoleOutTextBlock.Text += "\r\nOn my way";
+                            Traktor.Instance.StartTraktor(Int32.Parse(words[1]), Int32.Parse(words[2]));
+                        }
+                        else
+                        {
+                            ConsoleOutTextBlock.Text += "\r\nPosition not avaiable";
+
+                        }
+
+                    }
+                    else
+                    {
+                        ConsoleOutTextBlock.Text += "\r\nWrong parameter";
+
+                    }
+                 
+                    
+                   
                     
                 }
                 else

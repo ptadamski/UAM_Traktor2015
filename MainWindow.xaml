@@ -15,7 +15,7 @@
             </Menu>
             <StackPanel Width="50"/>
         </DockPanel>
-        <TextBox Name="ConsoleOutTextBlock" IsReadOnly="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="SaddleBrown" Foreground="Honeydew" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="18" Height="115" TextChanged="ConsoleOutputTextChanged" Margin="0,0,-18,0" Grid.RowSpan="2"/>
+        <TextBox Name="ConsoleOutTextBlock" IsReadOnly="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="SaddleBrown" Foreground="Honeydew" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="18" Height="104" TextChanged="ConsoleOutputTextChanged" Margin="0,0,-18,0"/>
         <TextBox Name="ConsoleInTextBox" Grid.ColumnSpan="17" Background="Gainsboro" FontSize="20" HorizontalAlignment="Left" Height="30" Grid.Row="11" TextWrapping="Wrap" Text="start" VerticalAlignment="Center" Width="1000" Margin="0,104,-23,-4" KeyDown="OnKeyDownHandler" MouseDown="ConsoleInMouseDown" TextChanged="ConsoleInTextBox_TextChanged" Grid.Column="1" Grid.RowSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Grid.Row="12" Background="Gainsboro" TextWrapping="Wrap" Text=">" VerticalAlignment="Center" FontSize="20" Height="30" Width="33" Margin="0,0,0,-3"/>
 
@@ -23,7 +23,7 @@
         <Image Grid.Column="1" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="1" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="1" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="1" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="1" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="1" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="1" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="1" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -34,7 +34,7 @@
         <Image Grid.Column="2" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="2" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="2" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="2" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="2" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="2" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="2" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="2" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -43,9 +43,9 @@
         <Image Grid.Column="2" Grid.Row="10" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
 
         <Image Grid.Column="3" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="3" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="3" Grid.Row="2" Source="/Images/field2.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="3" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="3" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="3" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="3" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="3" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="3" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -56,9 +56,9 @@
         <Image Grid.Column="4" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="4" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="4" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="4" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="4" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="4" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="4" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="4" Grid.Row="5" Source="/Images/field2.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="4" Grid.Row="6" Source="/Images/field2.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="4" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="4" Grid.Row="8" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="4" Grid.Row="9" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -67,7 +67,7 @@
         <Image Grid.Column="5" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="5" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="5" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="5" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="5" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="5" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="5" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="5" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -78,7 +78,7 @@
         <Image Grid.Column="6" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="6" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="6" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="6" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="6" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="6" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="6" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="6" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -89,7 +89,7 @@
         <Image Grid.Column="7" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="7" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="7" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="7" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="7" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="7" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="7" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="7" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -100,7 +100,7 @@
         <Image Grid.Column="8" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="8" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="8" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="8" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="8" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="8" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="8" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="8" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -111,7 +111,7 @@
         <Image Grid.Column="9" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="9" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="9" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="9" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="9" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="9" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="9" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="9" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -122,7 +122,7 @@
         <Image Grid.Column="10" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="10" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="10" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="10" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="10" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="10" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="10" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="10" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -134,7 +134,7 @@
         <Image Grid.Column="11" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="11" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="11" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="11" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="11" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="11" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="11" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="11" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -145,7 +145,7 @@
         <Image Grid.Column="12" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="12" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="12" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="12" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="12" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="12" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="12" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="12" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -157,7 +157,7 @@
         <Image Grid.Column="13" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="3" Source="/Images/field2.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="13" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="13" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="7" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -168,7 +168,7 @@
         <Image Grid.Column="13" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="13" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="13" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="13" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
@@ -180,30 +180,30 @@
         <Image Grid.Column="14" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="14" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="14" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="14" Grid.Row="8" Source="/Images/field2.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="14" Grid.Row="8" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="9" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="14" Grid.Row="10" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
 
         <Image Grid.Column="15" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="15" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="15" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="15" Grid.Row="8" Source="/Images/field2.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="15" Grid.Row="8" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="9" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="15" Grid.Row="10" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
 
 
         <Image Grid.Column="16" Grid.Row="1" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="16" Grid.Row="2" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="16" Grid.Row="2" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="16" Grid.Row="3" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
-        <Image Grid.Column="16" Grid.Row="4" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
+        <Image Grid.Column="16" Grid.Row="4" Source="/Images/field3.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="16" Grid.Row="5" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="16" Grid.Row="6" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
         <Image Grid.Column="16" Grid.Row="7" Source="/Images/field1.png" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Stretch="Fill" Width="60"/>
