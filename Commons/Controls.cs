@@ -46,7 +46,7 @@ namespace TraktorProj.Commons
             }
         }
 
-
+       
 
         /// <summary>
         /// Poruszanie się między "blokami" na planszy
@@ -61,6 +61,8 @@ namespace TraktorProj.Commons
                 if (window.GetType() == typeof (MainWindow))
                 {
 
+
+                    (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + newX + " " + newY;
                     Grid.SetColumn((window as MainWindow).TraktorImg, newX);
                     Grid.SetRow((window as MainWindow).TraktorImg, newY);
 
@@ -93,8 +95,8 @@ namespace TraktorProj.Commons
 
 
                     (window as MainWindow).TraktorImg.Source = TraktorImage.Source;
-                    
 
+                    
 
                    
                    
@@ -123,7 +125,7 @@ namespace TraktorProj.Commons
 
         public void TractorMoveTo(int targetX, int targetY)
         {
-            AStar.goTo(posX, posY, 5, 5);
+            //AStar.goTo(posX, posY, 5, 5);
         }
 
         /// <summary>
