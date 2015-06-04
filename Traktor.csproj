@@ -62,9 +62,16 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Algorithms\AStar.cs" />
+    <Compile Include="Algorithms\GA.cs" />
+    <Compile Include="Algorithms\GeneticAlgorithm.cs" />
+    <Compile Include="Algorithms\Generator.cs">
+      <SubType>
+      </SubType>
+    </Compile>
     <Compile Include="Algorithms\RAM.cs" />
     <Compile Include="Interface\ICiagnik.cs" />
     <Compile Include="Interface\IRoslina.cs" />
+    <Compile Include="Model\Market.cs" />
     <Compile Include="Model\MaszynaRolnicza\Brona.cs" />
     <Compile Include="Model\MaszynaRolnicza\Deszczownica.cs" />
     <Compile Include="Model\MaszynaRolnicza\Plug.cs" />
@@ -78,13 +85,13 @@
     <Compile Include="Model\MaszynaRolnicza\RozrzutnikNawozu.cs" />
     <Compile Include="Model\MaszynaRolnicza\Sadzarka.cs" />
     <Compile Include="Model\MaszynaRolnicza\Siewnik.cs" />
-    <Compile Include="Model\CzarnaSkrzynka.cs" />
+    <Compile Include="Model\BlackBox.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\MaszynaRolnicza\Traktor.cs" />
-    <Compile Include="Model\Zasob\Substancja.cs" />
+    <Compile Include="Model\Zasob\Resource.cs" />
     <Compile Include="Traktor.cs" />
     <Compile Include="Commons\Controls.cs" />
     <Compile Include="MainWindow.xaml.cs">

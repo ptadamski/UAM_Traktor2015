@@ -13,14 +13,14 @@ namespace TraktorProj.Model
 
         public Roslina()
         {
-            this.wymaganiaZyciowe = new Dictionary<Substancja,float>();
-            this.zapasy = new Dictionary<Substancja,float>();
+            this.wymaganiaZyciowe = new Dictionary<Resource,float>();
+            this.zapasy = new Dictionary<Resource,float>();
             this.stadiumZycia = Stadium.Nasiono; //level   
             this.etapZycia = 0;//dowiadczenie
         }
 
-        public Roslina(Dictionary<Substancja, float> zapasy, 
-            Dictionary<Substancja, float> wymaganiaZyciowe, Stadium stadiumZycia)
+        public Roslina(Dictionary<Resource, float> zapasy, 
+            Dictionary<Resource, float> wymaganiaZyciowe, Stadium stadiumZycia)
         {
             this.wymaganiaZyciowe = wymaganiaZyciowe;
             this.zapasy = zapasy;
@@ -28,7 +28,7 @@ namespace TraktorProj.Model
             this.etapZycia = 0;//dowiadczenie
         }
 
-        Dictionary<Substancja, float> zapasy;
+        Dictionary<Resource, float> zapasy;
 
         private int etapZycia;
 
@@ -40,12 +40,21 @@ namespace TraktorProj.Model
             set { stadiumZycia = value; }
         }
 
-        private Dictionary<Substancja, float> wymaganiaZyciowe;
+        private Dictionary<Resource, float> wymaganiaZyciowe;
 
-        public Dictionary<Substancja, float> WymaganiaZyciowe
+        public Dictionary<Resource, float> WymaganiaZyciowe
         {
             get { return wymaganiaZyciowe; }
         }
+
+        private string nazwa;
+
+        public string Nazwa
+        {
+            get { return nazwa; }
+            set { nazwa = value; }
+        }
+
 
         public void zyj(TimeSpan czas, Podpole miejsce)
         {
@@ -57,7 +66,7 @@ namespace TraktorProj.Model
             throw new NotImplementedException();
         }
 
-        public void wprowadz(Dictionary<Substancja, int> substancje)
+        public void wprowadz(Dictionary<Resource, int> substancje)
         {
             throw new NotImplementedException();
         }
@@ -72,7 +81,7 @@ namespace TraktorProj.Model
             throw new NotImplementedException();
         }
 
-        public void wydzielaj(Podpole miejsce, out Dictionary<Substancja, int> metabolity)
+        public void wydzielaj(Podpole miejsce, out Dictionary<Resource, int> metabolity)
         {
             throw new NotImplementedException();
         }
