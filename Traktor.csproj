@@ -78,7 +78,6 @@
     <Compile Include="Model\Point2i.cs" />
     <Compile Include="Algorithms\GA\Reproducer.cs" />
     <Compile Include="Algorithms\GA\Selector.cs" />
-    <Compile Include="Algorithms\RAM.cs" />
     <Compile Include="Interface\ICiagnik.cs" />
     <Compile Include="Interface\IRoslina.cs" />
     <Compile Include="Model\Market.cs" />
