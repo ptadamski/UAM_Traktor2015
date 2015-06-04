@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TraktorProj.Model
 {
-    public class CzarnaSkrzynka<_Input, _Output>
+    public class BlackBox<_Input, _Output>
     {
-        public CzarnaSkrzynka(List<_Input> input, List<float> inputAmount, List<_Output> output, List<float> outputAmount)
+        public BlackBox(List<_Input> input, List<float> inputAmount, List<_Output> output, List<float> outputAmount)
         {
             if (input.Count == inputAmount.Count && output.Count == outputAmount.Count)
             {
@@ -36,7 +36,7 @@ namespace TraktorProj.Model
             get { return output; }
         }
 
-        public void work(Dictionary<_Input, float> input, out Dictionary<_Output, float> output)
+        public void Work(Dictionary<_Input, float> input, out Dictionary<_Output, float> output)
         {
             output = new Dictionary<_Output, float>(this.output.Count);
 

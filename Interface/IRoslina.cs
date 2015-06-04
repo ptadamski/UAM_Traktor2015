@@ -11,9 +11,9 @@ namespace TraktorProj.Interface
     {
         void zyj(TimeSpan czas, Podpole miejsce);
         void gin();
-        void wprowadz(Dictionary<Substancja, int> substancje);
+        void wprowadz(Dictionary<Resource, int> substancje);
         void rosnij(Podpole miejsce);
         void rozmnazaj(Podpole miejsce, IRoslina potomek);
-        void wydzielaj(Podpole miejsce, out Dictionary<Substancja, int> metabolity);//Piotr : bede tego potrzebowal
+        void wydzielaj(Podpole miejsce, out Dictionary<Resource, int> metabolity);//Piotr : bede tego potrzebowal
     }
 }

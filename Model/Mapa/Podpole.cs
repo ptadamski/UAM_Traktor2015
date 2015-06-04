@@ -6,36 +6,43 @@ using System.Threading.Tasks;
 
 namespace TraktorProj.Model
 {
-    public class Podpole //magazyn zasobow
+    public class Podpole //magazyn zasobow i roslin
     {
         //albo Fractional zamiast int ?
         //private CzarnaSkrzynka<Substancja, Substancja, int>[] przemiany;
 
-        private Dictionary<Substancja, int> zasoby;
+        private Dictionary<Resource, int> zasoby;
 
-        public Dictionary<Substancja, int> Zasoby
+        public Dictionary<Resource, int> Zasoby
         {
             get { return zasoby; }
         }
 
-        void pobierz(Substancja typZasobu, int wymagane, out int dostepne)
+        private List<Roslina> rosliny;
+
+        public List<Roslina> Rosliny
+        {
+            get { return rosliny; }
+            set { rosliny = value; }
+        }
+
+        void pobierz(Resource typZasobu, int wymagane, out int dostepne)
         {
             dostepne = 0;
-            if (typZasobu.Wyczerpywalnosc)
+            if (typZasobu.IsInfinite)
             {
                 if (zasoby.TryGetValue(typZasobu, out dostepne))
                 {
                     if (dostepne > wymagane)
                         dostepne = wymagane;
                     zasoby[typZasobu] -= dostepne;
-                };
-
+                }
             }
             else
                 dostepne = wymagane;
         }
 
-        void dostarcz(Substancja typZasobu, int dostarczone, out int przyswojone)
+        void dostarcz(Resource typZasobu, int dostarczone, out int przyswojone)
         {
             przyswojone = dostarczone;
             zasoby[typZasobu] += dostarczone;
