@@ -6,11 +6,52 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace generator
+namespace TraktorProj
 {
+    public class Pair<T, S> : IEqualityComparer<Pair<T, S>>
+    {
+        public T First { get; set; }
+        public S Second { get; set; }
+
+        public bool Equals(Pair<T, S> x, Pair<T, S> y)
+        {
+            return x.First.Equals(y.First) && y.Second.Equals(y.Second);
+        }
+
+        public int GetHashCode(Pair<T, S> obj)
+        {
+            return obj.First.GetHashCode() ^ obj.Second.GetHashCode();
+        }
+    }
 
     public class Generator
-    {                 
+    {
+        public Generator(string path)
+        {
+            ReadFromFile(path);
+        }
+
+        public Generator(IDictionary<Pair<int, int>, int> inputItems)
+        {
+            InternalListing li;
+            foreach (var input in inputItems)
+            {
+                try
+                {
+                    li = this.items[input.Key.First]; 
+                }
+                catch (KeyNotFoundException)
+                {
+                    li = new InternalListing();
+                    this.items[input.Key.First] = li;
+                }
+                li.Items.Add(new Data() { attempts = 0, votes = input.Value, dst = input.Key.Second });
+            }
+
+            foreach (var pair in items)
+                pair.Value.Recount();
+        }
+
         private static int sentry = default(int);
 
         private Dictionary<int, InternalListing> items = new Dictionary<int, InternalListing>();
@@ -38,7 +79,7 @@ namespace generator
                 {
                     il = items[src];
                 }
-                catch (KeyNotFoundException ex)
+                catch (KeyNotFoundException)
                 {
                     il = new InternalListing();
                     items.Add(src, il);
@@ -71,7 +112,11 @@ namespace generator
                 pair.Value.Reset();
         }
 
-        public ICollection<int> States { get { return items.Keys; } }
+        public ICollection<int> States 
+        { get { return items.Keys; } }
+
+        public int this[int state] 
+        { get { return MoveNext(state); } }
 
         private class Data
         {
@@ -93,7 +138,7 @@ namespace generator
 
             private IList<Data> items = new List<Data>();
 
-            public IList<Data> Items
+            public  IList<Data> Items
             {
                 get { return items; }
                 set { items = value; }
@@ -127,6 +172,9 @@ namespace generator
                     item.attempts = 0;
                 attempts = 0;
             }
+
+            public Data this[int index]
+            { get { return Items[index]; } }
         }
     }
 }

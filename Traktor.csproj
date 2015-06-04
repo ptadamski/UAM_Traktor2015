@@ -62,12 +62,19 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Algorithms\AStar.cs" />
-    <Compile Include="Algorithms\GA.cs" />
-    <Compile Include="Algorithms\GeneticAlgorithm.cs" />
-    <Compile Include="Algorithms\Generator.cs">
+    <Compile Include="Interface\Arithmetics.cs" />
+    <Compile Include="Algorithms\GA\Chromosome.cs" />
+    <Compile Include="Generator.cs" />
+    <Compile Include="Algorithms\GA\GeneticAlgorithm.cs" />
+    <Compile Include="Algorithms\GA\Individual.cs" />
+    <Compile Include="Algorithms\GA\Interfaces.cs" />
+    <Compile Include="Model\Model.cs">
       <SubType>
       </SubType>
     </Compile>
+    <Compile Include="Model\Point2i.cs" />
+    <Compile Include="Algorithms\GA\Reproducer.cs" />
+    <Compile Include="Algorithms\GA\Selector.cs" />
     <Compile Include="Algorithms\RAM.cs" />
     <Compile Include="Interface\ICiagnik.cs" />
     <Compile Include="Interface\IRoslina.cs" />
