@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,7 +54,7 @@ namespace TraktorProj.Commons
         /// <param name="newX">Na którą pozycję X ma przejśc kelner</param>
         /// <param name="newY">Na którą pozycję Y ma przejśc kelner</param>
         /// top: move=1, right: move=2, down: move=3, left: move=4
-        public bool Move(int newX, int newY, int move)
+        public bool Move(int newX, int newY, int move, String bitmap)
         {
             foreach (Window window in Application.Current.Windows)
             {
@@ -69,7 +69,8 @@ namespace TraktorProj.Commons
                     TraktorImage = new Image();
                     TraktorBitmap = new BitmapImage();
                     TraktorBitmap.BeginInit();
-                    TraktorBitmap.UriSource = new Uri("/Images/tractor.png", UriKind.Relative);
+                    TraktorBitmap.UriSource = new Uri("/Images/"+bitmap+".png", UriKind.Relative);
+               //     TraktorImage.UpdateLayout();
                     if (move == 1)
                     {
                         TraktorBitmap.Rotation = Rotation.Rotate270;
@@ -109,15 +110,41 @@ namespace TraktorProj.Commons
             return true;
         }
 
+        public void changeBitmap()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(MainWindow))
+                {
+
+
+                    TraktorImage = new Image();
+                    TraktorBitmap = new BitmapImage();
+                    TraktorBitmap.BeginInit();
+                    TraktorBitmap.UriSource = new Uri("/Images/field1.png", UriKind.Relative);
+                   
+
+                    TraktorBitmap.EndInit();
+                    TraktorImage.Stretch = Stretch.UniformToFill;
+                    TraktorImage.Source = TraktorBitmap;
+
+
+                    (window as MainWindow).TraktorImg.Source = TraktorImage.Source;
+
+                }
+            }
+           
+        }
+
         /// <summary>
         /// Niech traktor porusza się w prawo o jedno pole
         /// </summary>
-        public void TractorMooveRight()
+        public void TractorMooveRight(string bitmap)
         {
            
             if (posX < 16)
             {
-                Move(posX + 1, posY,2);
+                Move(posX + 1, posY,2, bitmap);
                 
                         
             }
@@ -131,12 +158,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w lewo o jedno pole
         /// </summary>
-        public void TractorMooveLeft()
+        public void TractorMooveLeft(string bitmap)
         {
 
             if (posX > 0)
             {
-                Move(posX - 1, posY, 4);
+                Move(posX - 1, posY, 4,bitmap);
 
               
             }
@@ -145,12 +172,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w górę o jedno pole
         /// </summary>
-        public void TractorMooveUp()
+        public void TractorMooveUp(string bitmap)
         {
 
             if (posY > 1)
             {
-                Move(posX, posY - 1, 1);
+                Move(posX, posY - 1, 1,bitmap);
 
             }
         }
@@ -158,12 +185,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w dół o jedno pole
         /// </summary>
-        public void TractorMooveDown()
+        public void TractorMooveDown(string bitmap)
         {
 
             if (posY < 10)
             {
-                Move(posX, posY + 1,3); 
+                Move(posX, posY + 1,3,bitmap); 
             }
         }
     }
