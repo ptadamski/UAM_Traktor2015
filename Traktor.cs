@@ -163,52 +163,55 @@ namespace TraktorProj
              private void go()
         {
 
-            AStar astar = new AStar();
-
-            AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetX, targetY);
-            AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, controls.posX, controls.posY);
-            StartNode.GoalNode = GoalNode;
-
-            astar.FindPath(StartNode, GoalNode);
             /* AStar */
-            AStarNode2D point0 = (AStarNode2D)astar.Solution[0];
-            astar.Solution.RemoveAt(0);
+                    AStar astar = new AStar();
 
-            foreach (AStarNode2D point in astar.Solution)
-            {
-                Point punkt = new Point(point.X, point.Y);
+                    AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetX, targetY,0);
+                    AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, controls.posX, controls.posY,1);
+                    StartNode.GoalNode = GoalNode;
 
-                Thread.Sleep(300);
+                    astar.FindPath(StartNode, GoalNode);
+                    /* AStar */
+                    AStarNode2D point0 = (AStarNode2D)astar.Solution[0];
+                    astar.Solution.RemoveAt(0);
 
-                var nextX = (int)punkt.X;
-                var nextY = (int)punkt.Y;
+                        foreach (AStarNode2D point in astar.Solution)
+                        {
+                          
+                            int dir = point.DIR;
+                            Thread.Sleep(600);
 
-                if (controls.posX > nextX)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveLeft(image)));
-                }
-                else if (controls.posX < nextX)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveRight(image)));
-                }
-                else if (controls.posY < nextY)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveDown(image)));
-                }
-                else if (controls.posY > nextY)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveUp(image)));
+               
+                            if (dir == 3)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveLeft()));
+                            }
+                            else if (dir == 1)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveRight()));
+                            }
+                            else if (dir == 2)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveDown()));
+                            }
+                            else if (dir == 0)
+                            {
+                                 Application.Current.Dispatcher.BeginInvoke(
+                               DispatcherPriority.Background,
+                               new Action(() => controls.TractorMooveUp()));
 
-                }
-            }
+                            }
+
+
+
+                          
+                        }
         }
 
         /// <summary>
