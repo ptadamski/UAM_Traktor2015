@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,10 +52,11 @@ namespace TraktorProj
                 {
                     ConsoleOutTextBlock.Text = "";
                 }
-                else if (ConsoleInTextBox.Text == "start" || ConsoleInTextBox.Text == "Start")
+                else if (ConsoleInTextBox.Text.ToLower().StartsWith("start:") || ConsoleInTextBox.Text == "Start")
                 {
+                    String[] s = ConsoleInTextBox.Text.Split(':');
                     ConsoleOutTextBlock.Text += "\r\n> " + "started";
-                   // Traktor.Instance.StartTraktor();
+                    Traktor.Instance.StartTraktor(s[1]);
                 }
                 else if(ConsoleInTextBox.Text == "help")
                 {
@@ -66,19 +67,25 @@ namespace TraktorProj
                 }
                 else if (ConsoleInTextBox.Text == "left")
                 {
-                    controls.TractorMooveLeft();
+                    controls.TractorMooveLeft("tractor");
                 }
                 else if (ConsoleInTextBox.Text == "right")
                 {
-                    controls.TractorMooveRight();
+                    controls.TractorMooveRight("tractor");
                 }
                 else if (ConsoleInTextBox.Text == "down")
                 {
-                    controls.TractorMooveDown();
+                    controls.TractorMooveDown("tractor");
                 }
                 else if (ConsoleInTextBox.Text == "up")
                 {
-                    controls.TractorMooveUp();
+                    controls.TractorMooveUp("tractor");
+                }
+
+                else if (ConsoleInTextBox.Text == "generate")
+                {
+                    ConsoleOutTextBlock.Text += "\r\n> " + "generated";
+                    Traktor.Instance.generateParam();
                 }
                 else if (ConsoleInTextBox.Text.Contains("go"))
                 {
@@ -126,19 +133,19 @@ namespace TraktorProj
 
             if (e.Key == Key.Right)
             {
-                controls.TractorMooveRight();
+                controls.TractorMooveRight("tractor");
             }
             if (e.Key == Key.Left)
             {
-                controls.TractorMooveLeft();
+                controls.TractorMooveLeft("tractor");
             }
             if (e.Key == Key.Up)
             {
-                controls.TractorMooveUp();
+                controls.TractorMooveUp("tractor");
             }
             if (e.Key == Key.Down)
             {
-                controls.TractorMooveDown();
+                controls.TractorMooveDown("tractor");
             }
         }
 
