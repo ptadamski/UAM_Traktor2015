@@ -43,13 +43,13 @@ namespace TraktorProj
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
-        {
+        {                                        
             if (e.Key == Key.Enter)
-            {
+            {                                     
                // ConsoleOutTextBlock.Text += "siema";
                     
                 if (ConsoleInTextBox.Text == "clear")
-                {
+                {                                              
                     ConsoleOutTextBlock.Text = "";
                 }
                 else if (ConsoleInTextBox.Text.ToLower().StartsWith("start:") || ConsoleInTextBox.Text == "Start")
@@ -64,7 +64,7 @@ namespace TraktorProj
                     {
                         ConsoleOutTextBlock.Text += "\r\n> " + VARIABLE;
                     }
-                }
+                }                                           
                 else if (ConsoleInTextBox.Text == "left")
                 {
                     controls.TractorMooveLeft("tractor");
@@ -73,7 +73,7 @@ namespace TraktorProj
                 {
                     controls.TractorMooveRight("tractor");
                 }
-                else if (ConsoleInTextBox.Text == "down")
+                else if (ConsoleInTextBox.Text == "down")    
                 {
                     controls.TractorMooveDown("tractor");
                 }
@@ -89,6 +89,7 @@ namespace TraktorProj
                 }
                 else if (ConsoleInTextBox.Text.Contains("go"))
                 {
+
                     string[] words = ConsoleInTextBox.Text.Split(' ');
                     if (words.Length == 3)
                     {

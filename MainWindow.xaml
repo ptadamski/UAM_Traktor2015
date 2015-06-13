@@ -16,7 +16,7 @@
             <StackPanel Width="50"/>
         </DockPanel>
         <TextBox Name="ConsoleOutTextBlock" IsReadOnly="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="SaddleBrown" Foreground="Honeydew" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="18" Height="104" TextChanged="ConsoleOutputTextChanged" Margin="0,0,-18,0"/>
-        <TextBox Name="ConsoleInTextBox" Grid.ColumnSpan="17" Background="Gainsboro" FontSize="20" HorizontalAlignment="Left" Height="30" Grid.Row="11" TextWrapping="Wrap" Text="start" VerticalAlignment="Center" Width="1000" Margin="0,104,-23,-4" KeyDown="OnKeyDownHandler" MouseDown="ConsoleInMouseDown" TextChanged="ConsoleInTextBox_TextChanged" Grid.Column="1" Grid.RowSpan="2"/>
+        <TextBox Name="ConsoleInTextBox" Grid.ColumnSpan="16" Background="Gainsboro" FontSize="20" HorizontalAlignment="Left" Height="30" Grid.Row="11" TextWrapping="Wrap" Text="start" VerticalAlignment="Center" Width="1000" Margin="24,43,-108,32" KeyDown="OnKeyDownHandler" MouseDown="ConsoleInMouseDown" TextChanged="ConsoleInTextBox_TextChanged" Grid.Column="2"/>
         <TextBlock HorizontalAlignment="Left" Grid.Row="12" Background="Gainsboro" TextWrapping="Wrap" Text=">" VerticalAlignment="Center" FontSize="20" Height="30" Width="33" Margin="0,0,0,-3"/>
 
 
@@ -216,8 +216,8 @@
 
 
         <!-- traktor -->
-        <Image Name="TraktorImg" Grid.Column="1" Grid.Row="1"  Source="/Images/tractor.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
-        <Grid.RowDefinitions>
+       <Image Name="TraktorImg" Grid.Column="1" Grid.Row="1"  Source="/Images/tractor.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+       <Grid.RowDefinitions>
             <RowDefinition Height="16*"/>
             <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>

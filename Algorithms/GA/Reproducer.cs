@@ -8,7 +8,7 @@ using TraktorProj;
 namespace GeneticAlgorithm
 {
     public class CrossOverReproducer<_Individual, _Locus, _Gen> : IReproducer<_Individual>
-        where _Individual : IIndividual<IChromosome<_Locus,_Gen>>
+        where _Individual : IIndividual<IChromosome<_Locus, _Gen>>
     {
         public CrossOverReproducer(double mutationRate, IFactory<_Individual, _Locus> breeder, int locusCount)
         {
@@ -44,19 +44,19 @@ namespace GeneticAlgorithm
         /// <param name="children"></param>
         public void Reproduce(IList<_Individual> parents, out IList<_Individual> children)
         {
-            if (parents.Count==0)
-	{
+            if (parents.Count == 0)
+            {
                 throw new Exception("No Parent");
             }
 
             children = new List<_Individual>();
 
-            var genePool = new List<IChromosome<_Locus,_Gen>>();
+            var genePool = new List<IChromosome<_Locus, _Gen>>();
             foreach (var parent in parents)
                 genePool.Add(parent.Chromosome);
 
             for (int i = 0; i < parents.Count; i++)
-            {                                                    
+            {
                 var child = breeder.Create();
                 children.Add(child);
 
@@ -70,8 +70,8 @@ namespace GeneticAlgorithm
 
                 var childLoci = child.Chromosome.Loci.ToList();
                 foreach (var locus in loci)
-                {                               
-                    if (mutationRandom.NextDouble() <= mutationRate)   
+                {
+                    if (mutationRandom.NextDouble() <= mutationRate)
                         child.Chromosome.Mutate(locus);
                 }
             }
@@ -79,7 +79,7 @@ namespace GeneticAlgorithm
 
         public void CreatePacks(IList<_Individual> population, int populationLimit, out IList<_Individual>[] packs)
         {
-            packs = new List<_Individual>[populationLimit/2];
+            packs = new List<_Individual>[populationLimit / 2];
             for (int i = 0; i < packs.Length; i++)
                 packs[i] = new List<_Individual>();
 

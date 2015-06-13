@@ -40,6 +40,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,9 +63,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Algorithms\AStar.cs" />
+    <Compile Include="Algorithms\AStarNode2D.cs" />
     <Compile Include="Algorithms\Heap.cs" />
+    <Compile Include="Algorithms\ID3.cs" />
     <Compile Include="Algorithms\Main.cs" />
     <Compile Include="Algorithms\RAM.cs" />
+    <Compile Include="Commons\CSV.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Interface\Arithmetics.cs" />
     <Compile Include="Algorithms\GA\Chromosome.cs" />
     <Compile Include="Generator.cs" />
@@ -101,6 +107,7 @@
     </Compile>
     <Compile Include="Model\MaszynaRolnicza\Traktor.cs" />
     <Compile Include="Model\Zasob\Resource.cs" />
+    <Compile Include="Parametry.cs" />
     <Compile Include="Traktor.cs" />
     <Compile Include="Commons\Controls.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -143,7 +150,15 @@
   <ItemGroup>
     <Resource Include="Images\tractor.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\brona.png" />
+    <Resource Include="Images\deszczownia.png" />
+    <Resource Include="Images\kombajn.png" />
+    <Resource Include="Images\kopaczka.png" />
+    <Resource Include="Images\plug.png" />
+    <Resource Include="Images\rozrzutnik.png" />
+    <Resource Include="Images\sadzarka.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

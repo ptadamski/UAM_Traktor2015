@@ -68,13 +68,13 @@ namespace GeneticAlgorithm
             var max = fitnessFactors.Max();
             var dist = Math.Abs(max - min);
 
-            var uniformDistribuation = fitnessFactors.Select(x => 1.0f / (population.Count*population.Count)).ToList();                 
+            var uniformDistribuation = 1.0f / (population.Count * population.Count);               
             var shiftedDistribuation = fitnessFactors.Select(x => x - min).ToList(); 
 
             var mixedDistribuation = new float[fitnessFactors.Count];
 
             for (int i = 0; i < mixedDistribuation.Length; i++)
-                mixedDistribuation[i] = uniformDistribuation[i] + shiftedDistribuation[i];
+                mixedDistribuation[i] = uniformDistribuation + shiftedDistribuation[i];
 
             //mixedDistribuation = mixedDistribuation.OrderBy(x => x).ToArray();
 

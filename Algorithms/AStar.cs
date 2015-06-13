@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace TraktorProj.Algorithms
 {
-    public class AStarNode : IComparable
+    public abstract class AStarNode : IComparable
     {
 
         private AStarNode FParent;
@@ -90,24 +90,18 @@ namespace TraktorProj.Algorithms
         }
 
 
-        public virtual bool IsSameState(AStarNode ANode)
-        {
-            return false;
-        }
+        public abstract bool IsSameState(AStarNode ANode);
 
         public virtual void Calculate()
         {
             FGoalEstimate = 0.0f;
         }
 
-        public virtual void GetSuccessors(ArrayList ASuccessors)
-        {
-        }
-
+        public abstract void GetSuccessors(ArrayList ASuccessors);
 
         public override bool Equals(object obj)
         {
-            return IsSameState((AStarNode)obj);
+            return IsSameState(obj as AStarNode);
         }
 
         public override int GetHashCode()
@@ -115,11 +109,9 @@ namespace TraktorProj.Algorithms
             return base.GetHashCode();
         }
 
-
-
         public int CompareTo(object obj)
         {
-            return (-TotalCost.CompareTo(((AStarNode)obj).TotalCost));
+            return -TotalCost.CompareTo((obj as AStarNode).TotalCost);
         }
 
 

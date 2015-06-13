@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-
+using System.IO;
+using System.Text.RegularExpressions;
 //AUTHOR: Roosevelt dos Santos Júnior
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -145,6 +146,11 @@ namespace TraktorProj.ID3Algorithm
 		private string mTargetAttribute = "result";
 		private double mEntropySet = 0.0;
 
+        /// <summary>
+        /// Zlicza niepuste pola we wskazanej kolumnie tabeli
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <returns></returns>
 		private int countTotalPositives(DataTable samples)
 		{
 			int result = 0;
@@ -174,6 +180,14 @@ namespace TraktorProj.ID3Algorithm
 			return result;
 		}
 
+        /// <summary>
+        /// Zlicza w zadanej kolumnie ile jest wartosci pozytywnych (niepustych) a ile negatywnych (pustych) odpowiadajacych wskazanemu wzorcowi
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="attribute"></param>
+        /// <param name="value"></param>
+        /// <param name="positives"></param>
+        /// <param name="negatives"></param>
 		private void getValuesToAttribute(DataTable samples, Attribute attribute, string value, out int positives, out int negatives)
 		{
 			positives = 0;
@@ -189,7 +203,12 @@ namespace TraktorProj.ID3Algorithm
 			}		
 		}
 
-
+        /// <summary>
+        /// Oblicza przyrosc informacji wybranego atrybutu
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="attribute"></param>
+        /// <returns></returns>
 		private double calculateGain(DataTable samples, Attribute attribute)
 		{
 			string[] values = attribute.values;
@@ -209,7 +228,12 @@ namespace TraktorProj.ID3Algorithm
 			return mEntropySet + sum;
 		}
 
-
+        /// <summary>
+        /// Znajduje atrybut o maksymalnym przyroscie informacji
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="attributes"></param>
+        /// <returns></returns>
 		private Attribute   findBestAttribute(DataTable samples, Attribute[] attributes)
 		{
 			double maxGain = 0.0;
@@ -228,6 +252,12 @@ namespace TraktorProj.ID3Algorithm
 			return result;
 		}
 
+        /// <summary>
+        /// Sprawdza czy wszystkie komorki z zadanej kolumny sa niepuste
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="targetAttribute"></param>
+        /// <returns></returns>
 		private bool allSamplesPositives(DataTable samples, string targetAttribute)
 		{			
 			foreach (DataRow row in samples.Rows)
@@ -239,8 +269,15 @@ namespace TraktorProj.ID3Algorithm
 			return true;
 		}
 
+        /// <summary>
+        /// Sprawdza czy wszystkie komorki z zadanej kolumny sa puste
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="targetAttribute"></param>
+        /// <returns></returns>
 		private bool allSamplesNegatives(DataTable samples, string targetAttribute)
-		{
+        {
+            //czy wszystkie komorki tabeli sa puste?
 			foreach (DataRow row in samples.Rows)
 			{
 				if ( !row[targetAttribute].Equals(""))
@@ -249,9 +286,17 @@ namespace TraktorProj.ID3Algorithm
 
 			return true;			
 		}
-
+        
+        /// <summary>
+        /// Wyluskuje zbior unikatow z zadanej kolumny tabeli
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="targetAttribute"></param>
+        /// <returns></returns>
 		private ArrayList getDistinctValues(DataTable samples, string targetAttribute)
 		{
+            //wyluskaj zbior unikalnych wartosci z zadanej columny
+            //samples.AsEnumerable().Select(x=>x[targetAttribute]).Distinct().ToList();
 			ArrayList distinctValues = new ArrayList(samples.Rows.Count);
 
 			foreach(DataRow row in samples.Rows)
@@ -263,6 +308,12 @@ namespace TraktorProj.ID3Algorithm
 			return distinctValues;
 		}
 
+        /// <summary>
+        /// Znajduje obiekt o maksymalnej liczbie wystapien
+        /// </summary>
+        /// <param name="samples"></param>
+        /// <param name="targetAttribute"></param>
+        /// <returns></returns>
 		private object getMostCommonValue(DataTable samples, string targetAttribute)
 		{
 			ArrayList distinctValues = getDistinctValues(samples, targetAttribute);
@@ -289,32 +340,34 @@ namespace TraktorProj.ID3Algorithm
 			return distinctValues[MaxIndex];
 		}
 
-		private TreeNode internalMountTree(DataTable samples, string targetAttribute, Attribute[] attributes)
-		{
-			if (allSamplesPositives(samples, targetAttribute) == true)
-				//return new TreeNode(new Attribute(true));
-			
-			if (allSamplesNegatives(samples, targetAttribute) == true)
-                //return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));
+        private TreeNode internalMountTree(DataTable samples, string targetAttribute, Attribute[] attributes)
+        {
+            //if (allSamplesPositives(samples, targetAttribute) == true)
+            //return new TreeNode(new Attribute(true));
 
-			//if (attributes.Length == 0)
-				//return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));			
+            //if (allSamplesNegatives(samples, targetAttribute) == true)
+            //return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));
 
-                mTotal = samples.Rows.Count;//16;
-			mTargetAttribute = targetAttribute;
-			mTotalPositives = countTotalPositives(samples);
+            //if (attributes.Length == 0)
+            //return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));			
 
-			mEntropySet = calcEntropy(mTotalPositives, mTotal - mTotalPositives);
-			
-			Attribute bestAttribute = findBestAttribute(samples, attributes); 
+            mTotal = samples.Rows.Count;//16;
+            mTargetAttribute = targetAttribute;
+            mTotalPositives = countTotalPositives(samples);
 
-			TreeNode root = new TreeNode(bestAttribute);
-			
-			DataTable aSample = samples.Clone();
+            mEntropySet = calcEntropy(mTotalPositives, mTotal - mTotalPositives);
+
+            Attribute bestAttribute = findBestAttribute(samples, attributes);
+
+            TreeNode root = new TreeNode(bestAttribute);
+
+            DataTable aSample = samples.Clone();
             if (bestAttribute.values == null)
             {
-                return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));	
-            } else{
+                return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));
+            }
+            else
+            {
                 foreach (string value in bestAttribute.values)
                 {
 
@@ -348,8 +401,8 @@ namespace TraktorProj.ID3Algorithm
                 }
             }
 
-			return root;
-		}
+            return root;
+        }
 
 		public TreeNode buildTree(DataTable samples, string targetAttribute, Attribute[] attributes)
 		{
@@ -358,10 +411,15 @@ namespace TraktorProj.ID3Algorithm
 		}
 	}
 
+    //tragedia, trzeba to pobierac jakos z zewnatrz
 	public class ID3Sample
 	{
 	    public List<string> TreeList = new List<string>();
         private List<object[]> objeclist = new List<object[]>();
+
+        public ID3Sample(string sampleFilepath)
+        {             
+        }
 
 		public void displayNode(TreeNode root, string tabs)
 		{

@@ -12,7 +12,7 @@ using TraktorProj.Algorithms;
 
 namespace TraktorProj.Commons
 {
-    class Controls
+    public class Controls
     {
         /// <summary>
         /// NIE TYKAC!!!
@@ -22,7 +22,6 @@ namespace TraktorProj.Commons
         private BitmapImage TraktorBitmap;
         public int posX;
         public int posY;
-
 
         /// <summary>
         /// inicjalizacja
@@ -45,8 +44,6 @@ namespace TraktorProj.Commons
                 Console.WriteLine(exception.ToString());
             }
         }
-
-       
 
         /// <summary>
         /// Poruszanie się między "blokami" na planszy

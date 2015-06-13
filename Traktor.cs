@@ -22,33 +22,24 @@ namespace TraktorProj
         private static Traktor traktor;
         private int targetX = 1, targetY = 1;
         private string pora;
-        private string image;
+        private string imageName;
         private int order = 0;
         Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
         Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
-
 
 
         public static Traktor Instance
         {
             get
             {
-                if (traktor == null)
-                {
-                    traktor = new Traktor();
-                }
-
-                return traktor;
+                return traktor = traktor ?? new Traktor("tractor");
             }
         }
 
-        public Traktor()
+        public Traktor(string imageName)
         {
-
-            controls = new Controls();
-  
-
- 
+            this.controls = new Controls();
+            this.imageName = imageName;
         }
 
 
@@ -67,8 +58,8 @@ namespace TraktorProj
 
 
         }
-      
-	          public void StartTraktor(string p)
+
+        public void StartTraktor(string p)
         {
             pora = p;
             Thread startThread = new Thread(TraktorThread);
@@ -79,7 +70,7 @@ namespace TraktorProj
 
         }
 
-                private void TraktorThread()
+        private void TraktorThread()
         {
             // while(true){
             // generateParam();
@@ -98,8 +89,8 @@ namespace TraktorProj
 
             go();
             Thread.Sleep(1000);
-            targetY = targetX = 1;
-            go();
+            //targetY = targetX = 1;
+            //go();
 
             // }          
         }
@@ -160,58 +151,58 @@ namespace TraktorProj
 
         }
 
-             private void go()
+        private void go()
         {
 
             /* AStar */
-                    AStar astar = new AStar();
+            AStar astar = new AStar();
 
-                    AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetX, targetY,0);
-                    AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, controls.posX, controls.posY,1);
-                    StartNode.GoalNode = GoalNode;
+            AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetX, targetY, 0);
+            AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, controls.posX, controls.posY, 1);
+            StartNode.GoalNode = GoalNode;
 
-                    astar.FindPath(StartNode, GoalNode);
-                    /* AStar */
-                    AStarNode2D point0 = (AStarNode2D)astar.Solution[0];
-                    astar.Solution.RemoveAt(0);
+            astar.FindPath(StartNode, GoalNode);
+            /* AStar */
+            AStarNode2D point0 = (AStarNode2D)astar.Solution[0];
+            astar.Solution.RemoveAt(0);
 
-                        foreach (AStarNode2D point in astar.Solution)
-                        {
-                          
-                            int dir = point.DIR;
-                            Thread.Sleep(600);
+            foreach (AStarNode2D point in astar.Solution)
+            {
 
-               
-                            if (dir == 3)
-                            {
-                                 Application.Current.Dispatcher.BeginInvoke(
-                               DispatcherPriority.Background,
-                               new Action(() => controls.TractorMooveLeft()));
-                            }
-                            else if (dir == 1)
-                            {
-                                 Application.Current.Dispatcher.BeginInvoke(
-                               DispatcherPriority.Background,
-                               new Action(() => controls.TractorMooveRight()));
-                            }
-                            else if (dir == 2)
-                            {
-                                 Application.Current.Dispatcher.BeginInvoke(
-                               DispatcherPriority.Background,
-                               new Action(() => controls.TractorMooveDown()));
-                            }
-                            else if (dir == 0)
-                            {
-                                 Application.Current.Dispatcher.BeginInvoke(
-                               DispatcherPriority.Background,
-                               new Action(() => controls.TractorMooveUp()));
-
-                            }
+                int dir = point.DIR;
+                Thread.Sleep(600);
 
 
+                if (dir == 3)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                  DispatcherPriority.Background,
+                  new Action(() => controls.TractorMooveLeft(imageName)));
+                }
+                else if (dir == 1)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                  DispatcherPriority.Background,
+                  new Action(() => controls.TractorMooveRight(imageName)));
+                }
+                else if (dir == 2)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                  DispatcherPriority.Background,
+                  new Action(() => controls.TractorMooveDown(imageName)));
+                }
+                else if (dir == 0)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                  DispatcherPriority.Background,
+                  new Action(() => controls.TractorMooveUp(imageName)));
 
-                          
-                        }
+                }
+
+
+
+
+            }
         }
 
         /// <summary>
@@ -230,7 +221,7 @@ namespace TraktorProj
 
 
 
-            ID3Sample id3Sample = new ID3Sample();
+            ID3Sample id3Sample = new ID3Sample("");//tu musi byc jakis load z pliku...
             string mPora = pora;
 
 
@@ -267,8 +258,8 @@ namespace TraktorProj
                                             targetY = orderList[order].poleY;
                                             string maszyna = treeList[zz].Split(':')[1];
                                             orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                            image = maszyna.Substring(0, maszyna.Length - 1);
-                                            changeParameter(image, orderList[order]);
+                                            imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                            changeParameter(imageName, orderList[order]);
                                             return;
                                         }
 
@@ -282,8 +273,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -296,8 +287,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -313,8 +304,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -327,8 +318,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -344,8 +335,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -358,8 +349,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -375,8 +366,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -389,8 +380,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -406,8 +397,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -420,8 +411,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -436,8 +427,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -450,8 +441,8 @@ namespace TraktorProj
                                                     targetY = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                    image = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(image, orderList[order]);
+                                                    imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                    changeParameter(imageName, orderList[order]);
                                                     return;
                                                 }
                                             }
@@ -477,8 +468,8 @@ namespace TraktorProj
                                                             targetY = orderList[order].poleY;
                                                             string maszyna = treeList[z].Split(':')[1];
                                                             orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
-                                                            image = maszyna.Substring(0, maszyna.Length - 1);
-                                                            changeParameter(image, orderList[order]);
+                                                            imageName = maszyna.Substring(0, maszyna.Length - 1);
+                                                            changeParameter(imageName, orderList[order]);
                                                             return;
                                                         }
                                                     }
@@ -532,4 +523,4 @@ namespace TraktorProj
 
 
 
-}
+
