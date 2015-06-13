@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 //AUTHOR: Roosevelt dos Santos Júnior
 using System.Windows.Controls;
 using System.Windows.Documents;
+using TraktorProj.Commons;
 
 namespace TraktorProj.ID3Algorithm
 {
@@ -157,6 +158,8 @@ namespace TraktorProj.ID3Algorithm
 
 			foreach (DataRow aRow in samples.Rows)
 			{
+                var x = samples.Columns;
+                var t = aRow[mTargetAttribute];
 				if (!aRow[mTargetAttribute].Equals(""))
 					result++;
 			}
@@ -342,10 +345,10 @@ namespace TraktorProj.ID3Algorithm
 
         private TreeNode internalMountTree(DataTable samples, string targetAttribute, Attribute[] attributes)
         {
-            //if (allSamplesPositives(samples, targetAttribute) == true)
+            if (allSamplesPositives(samples, targetAttribute) == true)
             //return new TreeNode(new Attribute(true));
 
-            //if (allSamplesNegatives(samples, targetAttribute) == true)
+            if (allSamplesNegatives(samples, targetAttribute) == true)
             //return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));
 
             //if (attributes.Length == 0)
@@ -443,55 +446,12 @@ namespace TraktorProj.ID3Algorithm
             objeclist.Add(objects);
 	    }
 
-		public DataTable getSampleData()
+		public DataTable getSampleData(string filepath)
 		{
-            DataTable result = new DataTable("sample");
-
-            DataColumn 
-            column = result.Columns.Add("pora");
-            column.DataType = typeof(string);
-            column = result.Columns.Add("uprawa");
-            column.DataType = typeof(string);
-            column = result.Columns.Add("susza");
-            column.DataType = typeof(string);
-            column = result.Columns.Add("mineraly");
-            column.DataType = typeof(string);
-            column = result.Columns.Add("zbior");
-            column.DataType = typeof(string);
-            column = result.Columns.Add("zaorane");
-            column.DataType = typeof(string);
-            column = result.Columns.Add("bronowane");
-            column.DataType = typeof(string);
-            
-            column = result.Columns.Add("maszyna");
-            column.DataType = typeof(string);
-		    foreach (object[] objects in objeclist)
-		    {
-		        result.Rows.Add(objects);
-		    }
-            result.Rows.Add(new object[] { "jesien", "warzywo", "nie", "nie", "nie", "tak", "nie", ":sadzarka" });
-            result.Rows.Add(new object[] { "jesien", "warzywo", "nie", "nie", "nie", "tak", "tak", ":rozrzutnik" });
-            result.Rows.Add(new object[] { "jesien", "warzywo", "nie", "nie", "nie", "nie", "tak", "" });
-
-            result.Rows.Add(new object[] { "wiosna", "warzywo", "tak", "nie", "nie", "tak", "tak", ":deszczownia" });
-            result.Rows.Add(new object[] { "wiosna", "warzywo", "nie", "tak", "nie", "tak", "tak", ":rozrzutnik" });
-
-            result.Rows.Add(new object[] { "lato", "warzywo", "tak", "nie", "nie", "tak", "nie", ":deszczownia" });
-            result.Rows.Add(new object[] { "lato", "warzywo", "nie", "nie", "tak", "tak", "nie", ":kopaczka" });
-            result.Rows.Add(new object[] { "lato", "warzywo", "nie", "nie", "tak", "nie", "nie", ":plug" });
-            result.Rows.Add(new object[] { "lato", "warzywo", "nie", "nie", "nie", "tak", "nie", ":brona" });
-            //result.Rows.Add(new object[] { "jesien", "zboze", "susza", "mineraly", "zbior", "zasiane", "zaorane", "bronowane", "" });
-            result.Rows.Add(new object[] { "jesien", "zboze", "nie", "nie", "nie", "nie", "nie", ":plug" });
-            result.Rows.Add(new object[] { "jesien", "zboze", "nie", "nie", "nie", "tak", "nie", ":brona" });
-            result.Rows.Add(new object[] { "wiosna", "zboze", "tak", "nie", "nie", "tak", "tak", ":deszczownia" });
-            result.Rows.Add(new object[] { "wiosna", "zboze", "nie", "nie", "nie", "tak", "tak", ":rozrzutnik" });
-            result.Rows.Add(new object[] { "wiosna", "zboze", "nie", "nie", "nie", "tak", "tak", ":rozrzutnik" });
-
-            result.Rows.Add(new object[] { "lato", "zboze", "tak", "nie", "nie", "tak", "nie", ":deszczownia" });
-            result.Rows.Add(new object[] { "lato", "zboze", "nie", "nie", "tak", "tak", "tak", ":kombajn" });
-            result.Rows.Add(new object[] { "lato", "zboze", "nie", "nie", "nie", "nie", "nie", "" });
-			return result;	
+            CSV csv = new CSV(filepath, ',', true);
+            return csv;
 		}
+
 	    public List<string> GenerateTree()
 	    {
             Attribute pora = new Attribute("pora", new string[] { "jesien", "wiosna", "lato" });
@@ -502,7 +462,7 @@ namespace TraktorProj.ID3Algorithm
             Attribute zaorane = new Attribute("zaorane", new string[] { "tak", "nie" });
             Attribute bronowane = new Attribute("bronowane", new string[] { "tak", "nie" });
             Attribute[] attributes = new Attribute[] { pora, uprawa, susza, mineraly, zbior,zaorane, bronowane };
-            DataTable samples = getSampleData();
+            DataTable samples = getSampleData("maszyny");
 
             DecisionTreeID3 id3 = new DecisionTreeID3();
             TreeNode root = id3.buildTree(samples, "maszyna", attributes);

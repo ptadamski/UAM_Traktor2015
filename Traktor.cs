@@ -84,10 +84,10 @@ namespace TraktorProj
             //
             //zboze.zaorane = "tak";
 
-            //Thread.Sleep(2000);
+            //Thread.Sleep(2000); 
+            go();
             RunID3();
 
-            go();
             Thread.Sleep(1000);
             //targetY = targetX = 1;
             //go();

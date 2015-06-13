@@ -32,7 +32,7 @@ namespace TraktorProj.Commons
             string line;
             Clear();
 
-            while ((line = reader.ReadLine()) != "")
+            while ((line = reader.ReadLine()) != null)
             {
                 var items = line.Split(separator);
 
@@ -42,9 +42,12 @@ namespace TraktorProj.Commons
                         Columns.Add(new DataColumn(items[i]));
                     header = false;
                 }
-
-                var row = NewRow();
-                row.ItemArray = items;
+                else
+                {
+                    var row = NewRow();
+                    row.ItemArray = items;
+                    Rows.Add(row);
+                }
             }
 
             reader.Close();
