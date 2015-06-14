@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TraktorProj.Commons
 {
-    public class CSV : DataTable
+    public class CSV
     {
         public CSV(string filePath, char separator, bool withHeader)
         {
@@ -25,12 +25,21 @@ namespace TraktorProj.Commons
             set { separator = value; }
         }
 
+        private DataTable table;
+
+        public DataTable Table
+        {
+            get { return table; }
+            set { table = value; }
+        }
+
+
         public void LoadFromFile(string filePath, bool header = true)
         {
             StreamReader reader = new StreamReader(filePath);
 
             string line;
-            Clear();
+            table.Clear();
 
             while ((line = reader.ReadLine()) != null)
             {
@@ -39,14 +48,14 @@ namespace TraktorProj.Commons
                 if (header)
                 {
                     for (int i = 0, length = items.Length; i < length; i++)
-                        Columns.Add(new DataColumn(items[i]));
+                        table.Columns.Add(new DataColumn(items[i]));
                     header = false;
                 }
                 else
                 {
-                    var row = NewRow();
+                    var row = table.NewRow();
                     row.ItemArray = items;
-                    Rows.Add(row);
+                    table.Rows.Add(row);
                 }
             }
 

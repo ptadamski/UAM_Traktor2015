@@ -449,7 +449,7 @@ namespace TraktorProj.ID3Algorithm
 		public DataTable getSampleData(string filepath)
 		{
             CSV csv = new CSV(filepath, ',', true);
-            return csv;
+            return csv.Table;
 		}
 
 	    public List<string> GenerateTree()
