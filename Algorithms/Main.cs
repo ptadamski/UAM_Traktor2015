@@ -82,5 +82,10 @@ namespace TraktorProj.Algorithms
         {
             Map3[y, x] = z;
         }
+
+        internal void SetMap2(double p1, double p2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

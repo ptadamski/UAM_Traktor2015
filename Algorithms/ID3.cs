@@ -143,7 +143,7 @@ namespace TraktorProj.ID3Algorithm
 	{
 		private DataTable mSamples;
 		private int mTotalPositives = 0;
-		private int mTotal = 16;
+		private int mTotal =32;
 		private string mTargetAttribute = "result";
 		private double mEntropySet = 0.0;
 
@@ -474,6 +474,8 @@ namespace TraktorProj.ID3Algorithm
 
         public List<string> GenerateTree2()
         {
+
+          
             Attribute pora = new Attribute("pora", new string[] { "jesien", "wiosna", "lato" });
             Attribute rozrost = new Attribute("rozrost", new string[] { "tak", "nie" });
             Attribute chodnik = new Attribute("chodnik", new string[] { "tak", "nie" });

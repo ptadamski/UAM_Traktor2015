@@ -30,6 +30,7 @@ namespace TraktorProj
 
         //Imagelist<Image> allTiles = new Imagelist<Image>();
         private ArrayList allTiles;
+        private ChwastPos ChwP;
         private int maxTiles;
         private int[,] posTiles = new int[20, 20];
         
@@ -44,7 +45,7 @@ namespace TraktorProj
             allTiles = new ArrayList();
 
             controls = new Controls();
-
+            ChwP = new ChwastPos();
         
 
             comandsList = new List<string>();
@@ -173,7 +174,7 @@ namespace TraktorProj
                 }
                 else if (ConsoleInTextBox.Text.Contains("chwast"))
                 {
-                    ChwastPos ChwP = new ChwastPos();
+                   
                     ChwP.StartSzkodnik();
                     //controls.createItem("chwast");
                 }

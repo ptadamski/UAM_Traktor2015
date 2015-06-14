@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
+
 using TraktorProj.Algorithms;
 using TraktorProj.Commons;
 using TraktorProj.ID3Algorithm;
 using System.Threading;
+using System.Windows;
+
 
 
 namespace TraktorProj
@@ -17,16 +19,21 @@ namespace TraktorProj
         Param wiosna = new Param(TraktorProj.Param.PoraRoku.wiosna);
         Param lato = new Param(TraktorProj.Param.PoraRoku.lato);
         Param jesien = new Param(TraktorProj.Param.PoraRoku.jesien);
+      
         private int[,] istChwast = new int[21, 3];
+        private string choose;
         private int order = 0;
         public int targetX;
         public int targetY;
         public string pora;
         public Point positions;
         private MainClass main;
+        
         public ChwastPos()
         {
+         
             main = new MainClass();
+           
             for (int i = 0; i <= 20; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -111,7 +118,7 @@ namespace TraktorProj
 
                 positions = pozycje[idpos];
             }
-            main.SetMap2(positions.X, positions.Y);
+            main.SetMap2(Convert.ToInt32(positions.X), Convert.ToInt32(positions.Y));
 
 
         }
@@ -120,28 +127,40 @@ namespace TraktorProj
         {
             targetX = x;
             targetY = y;
-            main = new MainClass();
-            Thread startThread = new Thread(SzkodnikThread);
-            startThread.IsBackground = true;
+           // main = new MainClass();
+           // Thread startThread = new Thread(SzkodnikThread);
+            //startThread.IsBackground = true;
 
-            startThread.Start();
-
-
+            //StartSzkodnik();
+            generateParam();
+            RunID3();
         }
 
         public void StartSzkodnik()
         {
             //pora = p;
-            Thread startThread = new Thread(SzkodnikThread);
-            startThread.IsBackground = true;
+           
+            //Thread startThread = new Thread(SzkodnikThread);
+            //startThread.IsBackground = true;
+             Window window = Application.Current.Windows[0];
+            //startThread.Start();
+            int aid = getAvaiableId();
+            getPositions(aid);
+            targetX = Convert.ToInt32(positions.X);
+            targetY = Convert.ToInt32(positions.Y);
+            generateParam();
+            RunID3();
+            addChwast(aid, targetX, targetY, 1);
+            (window as MainWindow).setTile(targetX, targetY, "plug");
+            //con.setTile(targetX, targetY, 'plug');
 
-            startThread.Start();
 
 
         }
 
         private void SzkodnikThread()
         {
+           
              while(true){
                 generateParam();
             /*
@@ -157,7 +176,8 @@ namespace TraktorProj
 
             */
             RunID3();
-           
+            
+            
             /*
             if (imageName == "kombajn")
             {
@@ -224,13 +244,12 @@ namespace TraktorProj
             orderList.Clear();
 
             orderList.Add(wiosna);
-            orderList.Add(lato);
-            orderList.Add(jesien);
+           
             // image = "tractor";
             ID3Sample id3Sample = new ID3Sample("");
 
             treeList = id3Sample.GenerateTree2();
-
+ 
             if (order < orderList.Count - 1)
                 order++;
             else
@@ -251,6 +270,7 @@ namespace TraktorProj
                                 {
                                     string szkodnik = treeList[l].Split(':')[1];
                                     orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                    choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                     return;
                                 }
                                 if (treeList[l].Contains("trawa"))
@@ -261,6 +281,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 2].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -270,6 +291,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 4].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -282,6 +304,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 2].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -291,6 +314,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 4].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -303,6 +327,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 2].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -312,6 +337,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 4].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -324,6 +350,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 2].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
@@ -333,6 +360,7 @@ namespace TraktorProj
                                         {
                                             string szkodnik = treeList[l + 4].Split(':')[1];
                                             orderList[order].szkodnik = szkodnik.Substring(0, szkodnik.Length - 1);
+                                            choose = szkodnik.Substring(0, szkodnik.Length - 1);
                                             return;
                                         }
                                     }
