@@ -189,10 +189,11 @@ namespace TraktorProj
             // Traktor.Instance.zmienPole(targetX, targetY, fieldImageName);
 
 
-            Thread.Sleep(1000);
+            
             targetY = targetX = 1;
             go();
             */
+            Thread.Sleep(1000);
              }          
         }
         
@@ -234,6 +235,8 @@ namespace TraktorProj
                 order++;
             else
                 order = 0;
+
+            
             for (int i = 0; i < treeList.Count; i++)
             {
                 if (treeList[i].Contains("pora"))
