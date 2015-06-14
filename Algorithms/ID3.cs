@@ -462,7 +462,7 @@ namespace TraktorProj.ID3Algorithm
             Attribute zaorane = new Attribute("zaorane", new string[] { "tak", "nie" });
             Attribute bronowane = new Attribute("bronowane", new string[] { "tak", "nie" });
             Attribute[] attributes = new Attribute[] { pora, uprawa, susza, mineraly, zbior,zaorane, bronowane };
-            DataTable samples = getSampleData("maszyny");
+            DataTable samples = getSampleData(@"..\..\maszyny");
 
             DecisionTreeID3 id3 = new DecisionTreeID3();
             TreeNode root = id3.buildTree(samples, "maszyna", attributes);
