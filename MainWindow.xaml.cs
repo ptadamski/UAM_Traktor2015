@@ -145,19 +145,19 @@ namespace TraktorProj
 
                 else if (ConsoleInTextBox.Text == "left")
                 {
-                    controls.TractorMooveLeft("tractor");
+                    controls.TractorMooveLeft("tractor",1,1,"");
                 }
                 else if (ConsoleInTextBox.Text == "right")
                 {
-                    controls.TractorMooveRight("tractor");
+                    controls.TractorMooveRight("tractor",1,1,"");
                 }
                 else if (ConsoleInTextBox.Text == "down")    
                 {
-                    controls.TractorMooveDown("tractor");
+                    controls.TractorMooveDown("tractor",1,1,"");
                 }
                 else if (ConsoleInTextBox.Text == "up")
                 {
-                    controls.TractorMooveUp("tractor");
+                    controls.TractorMooveUp("tractor", 1, 1, "");
                 }
 
                 else if (ConsoleInTextBox.Text == "generate")
@@ -222,19 +222,19 @@ namespace TraktorProj
 
             if (e.Key == Key.Right)
             {
-                controls.TractorMooveRight("tractor");
+                controls.TractorMooveRight("tractor", 1, 1, "");
             }
             if (e.Key == Key.Left)
             {
-                controls.TractorMooveLeft("tractor");
+                controls.TractorMooveLeft("tractor", 1, 1, "");
             }
             if (e.Key == Key.Up)
             {
-                controls.TractorMooveUp("tractor");
+                controls.TractorMooveUp("tractor", 1, 1, "");
             }
             if (e.Key == Key.Down)
             {
-                controls.TractorMooveDown("tractor");
+                controls.TractorMooveDown("tractor", 1, 1, "");
             }
         }
 

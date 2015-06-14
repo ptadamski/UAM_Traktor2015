@@ -56,7 +56,7 @@ namespace TraktorProj.Commons
         /// <param name="newX">Na którą pozycję X ma przejśc kelner</param>
         /// <param name="newY">Na którą pozycję Y ma przejśc kelner</param>
         /// top: move=1, right: move=2, down: move=3, left: move=4
-        public bool Move(int newX, int newY, int move, String bitmap)
+        public bool Move(int newX, int newY, int move, String bitmap,int targetX,int targetY, string fieldName)
         {
             Window window = Application.Current.Windows[0];
             
@@ -109,6 +109,11 @@ namespace TraktorProj.Commons
             posX = newX;
             posY = newY;
 
+            if (posX == targetX && posY == targetY)
+            {
+                (window as MainWindow).setTile(targetX, targetY, fieldName);
+            }
+            
 
             return true;
         }
@@ -244,12 +249,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w prawo o jedno pole
         /// </summary>
-        public void TractorMooveRight(string bitmap)
+        public void TractorMooveRight(string bitmap, int targetX, int targetY, String fieldName)
         {
            
             if (posX < 16)
             {
-                Move(posX + 1, posY,2, bitmap);
+                Move(posX + 1, posY, 2, bitmap, targetX, targetY, fieldName);
                 
                         
             }
@@ -263,12 +268,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w lewo o jedno pole
         /// </summary>
-        public void TractorMooveLeft(string bitmap)
+        public void TractorMooveLeft(string bitmap, int targetX, int targetY, String fieldName)
         {
 
             if (posX > 0)
             {
-                Move(posX - 1, posY, 4,bitmap);
+                Move(posX - 1, posY, 4, bitmap, targetX, targetY, fieldName);
 
               
             }
@@ -277,12 +282,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w górę o jedno pole
         /// </summary>
-        public void TractorMooveUp(string bitmap)
+        public void TractorMooveUp(string bitmap, int targetX, int targetY, String fieldName)
         {
 
             if (posY > 1)
             {
-                Move(posX, posY - 1, 1,bitmap);
+                Move(posX, posY - 1, 1, bitmap, targetX, targetY,fieldName);
 
             }
         }
@@ -290,12 +295,12 @@ namespace TraktorProj.Commons
         /// <summary>
         /// Niech traktor porusza się w dół o jedno pole
         /// </summary>
-        public void TractorMooveDown(string bitmap)
+        public void TractorMooveDown(string bitmap, int targetX, int targetY, String fieldName)
         {
 
             if (posY < 10)
             {
-                Move(posX, posY + 1,3,bitmap); 
+                Move(posX, posY + 1, 3, bitmap, targetX, targetY, fieldName); 
             }
         }
     }
