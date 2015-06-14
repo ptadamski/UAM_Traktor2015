@@ -28,9 +28,9 @@ namespace TraktorProj.Algorithms
 
         static public int GetMap(int x, int y)
         {
-            if ((x < 0) || (x > 16))
+            if ((x < 1) || (x > 16))
                 return (-1);
-            if ((y < 0) || (y > 10))
+            if ((y < 1) || (y > 10))
                 return (-1);
             return (Map[y, x]);
         }

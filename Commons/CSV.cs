@@ -14,7 +14,7 @@ namespace TraktorProj.Commons
         public CSV(string filePath, char separator, bool withHeader)
         {
             this.separator = separator;
-            LoadFromFile(filePath, withHeader);
+           // LoadFromFile(filePath, withHeader);
         }
 
         private char separator;
