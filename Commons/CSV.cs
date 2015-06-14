@@ -25,7 +25,7 @@ namespace TraktorProj.Commons
             set { separator = value; }
         }
 
-        private DataTable table;
+        private DataTable table = new DataTable();
 
         public DataTable Table
         {
