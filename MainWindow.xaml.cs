@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TraktorProj.Commons;
 using TraktorProj.Algorithms;
+using System.Collections;
 
 
 namespace TraktorProj
@@ -26,11 +27,21 @@ namespace TraktorProj
     public partial class MainWindow : Window
     {
         private Controls controls;
-       
-        private List<string> comandsList; 
+
+        //Imagelist<Image> allTiles = new Imagelist<Image>();
+        private ArrayList allTiles;
+        private int maxTiles;
+        private int[,] posTiles = new int[20, 20];
+        
+        private List<string> comandsList;
+
         public MainWindow()
         {
             InitializeComponent();
+            maxTiles = 0;
+          
+            //Image[] allTiles = new Image[1000];
+            allTiles = new ArrayList();
 
             controls = new Controls();
 
@@ -41,6 +52,50 @@ namespace TraktorProj
             comandsList.Add("start - start");
             comandsList.Add("help - display help");
         }
+
+
+        public void setTile(int posx, int posy, string sprite)
+        {
+            posTiles[posx, posy] = maxTiles;
+            ConsoleOutTextBlock.Text += "\r\n> " + "nowe pole "+posx+" "+posy;
+            
+            BitmapImage ItemBitmap;
+            Image ItemTemp = new Image();
+          
+
+            ItemTemp.Width = 60;
+            ItemTemp.Height = 60;
+            Window window = Application.Current.Windows[0];
+          
+            ItemBitmap = new BitmapImage();
+            ItemBitmap.BeginInit();
+            ItemBitmap.UriSource = new Uri("/Images/"+sprite+".png", UriKind.Relative);
+
+            ItemBitmap.EndInit();
+            ItemTemp.Stretch = Stretch.UniformToFill;
+            ItemTemp.Source = ItemBitmap;
+            (window as MainWindow).MainGrid.Children.Add(ItemTemp);
+            Grid.SetRow(ItemTemp, posx);
+            Grid.SetColumn(ItemTemp, posy);
+
+            allTiles.Add((Image)ItemTemp);
+
+            maxTiles++;
+
+        }
+        public void clearTile(int posx, int posy)
+        {
+            Window window = Application.Current.Windows[0];
+            int find = posTiles[posx, posy];
+            Image ItemTemp = new Image();
+            ItemTemp = (Image)allTiles[find];
+            (window as MainWindow).MainGrid.Children.Remove(ItemTemp);
+            ConsoleOutTextBlock.Text += "\r\n> " + "usunieto pole " + posx + " " + posy;
+           // (window as MainWindow).MainGrid.Children.Remove(allTiles[find]);
+            
+
+        }
+
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {                                        
@@ -64,7 +119,30 @@ namespace TraktorProj
                     {
                         ConsoleOutTextBlock.Text += "\r\n> " + VARIABLE;
                     }
-                }                                           
+                }
+                else if (ConsoleInTextBox.Text == "add")
+                {
+                    Random random = new Random();
+                    int posx = random.Next(1, 13);
+                    int posy = random.Next(1, 10);
+                    setTile(posx, posy,"field3");
+                }
+                else if (ConsoleInTextBox.Text.Contains("rem"))
+                {
+
+                    string[] words = ConsoleInTextBox.Text.Split(' ');
+                    if (words.Length == 3) {
+                        int tarX = Int32.Parse(words[1]);
+                        int tarY = Int32.Parse(words[2]);
+                        clearTile(tarX, tarY);
+
+                        
+                    }
+                    else {
+                        ConsoleOutTextBlock.Text += "\r\nWrong parameter";
+                    }
+                }
+
                 else if (ConsoleInTextBox.Text == "left")
                 {
                     controls.TractorMooveLeft("tractor");

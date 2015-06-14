@@ -69,6 +69,7 @@
     <Compile Include="Algorithms\Main.cs" />
     <Compile Include="Algorithms\RAM.cs" />
     <Compile Include="ChwastPos.cs" />
+    <Compile Include="Commons\Imagelist.cs" />
     <Compile Include="Commons\CSV.cs" />
     <Compile Include="Interface\Arithmetics.cs" />
     <Compile Include="Algorithms\GA\Chromosome.cs" />

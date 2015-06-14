@@ -155,7 +155,7 @@ namespace TraktorProj
 
         private void go()
         {
-
+            
             /* AStar */
             AStar astar = new AStar();
 
