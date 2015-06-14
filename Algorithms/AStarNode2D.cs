@@ -79,7 +79,7 @@ namespace TraktorProj.Algorithms
             {
                 double xd = FX - ((AStarNode2D)GoalNode).X;
                 double yd = FY - ((AStarNode2D)GoalNode).Y;
-                GoalEstimate = (Math.Abs(xd) + Math.Abs(yd)) * 1.5;
+                GoalEstimate = (Math.Abs(xd) + Math.Abs(yd));
             }
             else
             {

@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace TraktorProj.Algorithms
 {
-    public abstract class AStarNode : IComparable
+    public class AStarNode : IComparable
     {
 
         private AStarNode FParent;
@@ -90,18 +90,24 @@ namespace TraktorProj.Algorithms
         }
 
 
-        public abstract bool IsSameState(AStarNode ANode);
+        public virtual bool IsSameState(AStarNode ANode)
+        {
+            return false;
+        }
 
         public virtual void Calculate()
         {
             FGoalEstimate = 0.0f;
         }
 
-        public abstract void GetSuccessors(ArrayList ASuccessors);
+        public virtual void GetSuccessors(ArrayList ASuccessors)
+        {
+        }
+
 
         public override bool Equals(object obj)
         {
-            return IsSameState(obj as AStarNode);
+            return IsSameState((AStarNode)obj);
         }
 
         public override int GetHashCode()
@@ -109,9 +115,11 @@ namespace TraktorProj.Algorithms
             return base.GetHashCode();
         }
 
+
+
         public int CompareTo(object obj)
         {
-            return -TotalCost.CompareTo((obj as AStarNode).TotalCost);
+            return (-TotalCost.CompareTo(((AStarNode)obj).TotalCost));
         }
 
 
@@ -123,8 +131,8 @@ namespace TraktorProj.Algorithms
 
         private AStarNode FStartNode;
         private AStarNode FGoalNode;
-        private Heap FOpenList;
-        private Heap FClosedList;
+        private Heap Fringe;
+
         private ArrayList FSuccessors;
 
 
@@ -142,8 +150,8 @@ namespace TraktorProj.Algorithms
 
         public AStar()
         {
-            FOpenList = new Heap();
-            FClosedList = new Heap();
+            Fringe = new Heap();
+
             FSuccessors = new ArrayList();
             FSolution = new ArrayList();
         }
@@ -154,51 +162,44 @@ namespace TraktorProj.Algorithms
             FStartNode = AStartNode;
             FGoalNode = AGoalNode;
 
-            FOpenList.Add(FStartNode);
+            Fringe.Add(FStartNode);
 
-            while (FOpenList.Count > 0)
+            while (Fringe.Count > 0)
             {
-                AStarNode NodeCurrent = (AStarNode)FOpenList.Pop();
+                AStarNode NodeCurrent = (AStarNode)Fringe.Pop();
 
-               if(NodeCurrent.IsGoal())
+                if (NodeCurrent.IsGoal())
                 {
-                   
-					while(NodeCurrent != null)
-                    {
-						FSolution.Insert(0,NodeCurrent);
-                       
-						NodeCurrent = NodeCurrent.Parent;
-					}
-					break;
-				}
 
-				NodeCurrent.GetSuccessors(FSuccessors);
+                    while (NodeCurrent != null)
+                    {
+                        FSolution.Insert(0, NodeCurrent);
+
+                        NodeCurrent = NodeCurrent.Parent;
+                    }
+                    break;
+                }
+
+                NodeCurrent.GetSuccessors(FSuccessors);
 
                 foreach (AStarNode NodeSuccessor in FSuccessors)
                 {
                     AStarNode NodeOpen = null;
-                    if (FOpenList.Contains(NodeSuccessor))
-                        NodeOpen = (AStarNode)FOpenList[FOpenList.IndexOf(NodeSuccessor)];
+                    if (Fringe.Contains(NodeSuccessor))
+                        NodeOpen = (AStarNode)Fringe[Fringe.IndexOf(NodeSuccessor)];
                     if ((NodeOpen != null) && (NodeSuccessor.TotalCost > NodeOpen.TotalCost))
                         continue;
 
-                    AStarNode NodeClosed = null;
-                    if (FClosedList.Contains(NodeSuccessor))
-                        NodeClosed = (AStarNode)FClosedList[FClosedList.IndexOf(NodeSuccessor)];
-                    if ((NodeClosed != null) && (NodeSuccessor.TotalCost > NodeClosed.TotalCost))
-                        continue;
 
 
 
-                    FOpenList.Remove(NodeOpen);
 
-                    FClosedList.Remove(NodeClosed);
-
-                    FOpenList.Push(NodeSuccessor);
+                    Fringe.Remove(NodeOpen);
+                    Fringe.Push(NodeSuccessor);
                 }
-                FClosedList.Add(NodeCurrent);
+
             }
         }
-       
+
     }
 }
