@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithm
+namespace TraktorProj.Commons
 {
     public struct Point2i : IEqualityComparer<Point2i>, Algebra.IArithmetic<Point2i>
     {

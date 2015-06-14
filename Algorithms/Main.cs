@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 
 namespace TraktorProj.Algorithms
-{
-    
+{    
     class MainClass
     {
 

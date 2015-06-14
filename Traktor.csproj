@@ -71,12 +71,16 @@
     <Compile Include="ChwastPos.cs" />
     <Compile Include="Commons\Imagelist.cs" />
     <Compile Include="Commons\CSV.cs" />
+    <Compile Include="Drawable.cs" />
+    <Compile Include="Model\Factory\ImageFactory.cs" />
     <Compile Include="Interface\Arithmetics.cs" />
     <Compile Include="Algorithms\GA\Chromosome.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Algorithms\GA\GeneticAlgorithm.cs" />
     <Compile Include="Algorithms\GA\Individual.cs" />
     <Compile Include="Algorithms\GA\Interfaces.cs" />
+    <Compile Include="Interface\IDrawable.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Model\Model.cs">
       <SubType>
       </SubType>
