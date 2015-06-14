@@ -65,12 +65,13 @@
     <Compile Include="Algorithms\AStar.cs" />
     <Compile Include="Algorithms\AStarNode2D.cs" />
     <Compile Include="Algorithms\Heap.cs" />
-    <Compile Include="Algorithms\ID3.cs" />
+    <Compile Include="Algorithms\ID3\ID3Attrib.cs" />
+    <Compile Include="Algorithms\ID3\ID3DecisionTree.cs" />
+    <Compile Include="Algorithms\ID3\ID3Sample.cs" />
+    <Compile Include="Algorithms\ID3\ID3TreeNode.cs" />
     <Compile Include="Algorithms\Main.cs" />
     <Compile Include="Algorithms\RAM.cs" />
-    <Compile Include="Commons\CSV.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Commons\CSV.cs" />
     <Compile Include="Interface\Arithmetics.cs" />
     <Compile Include="Algorithms\GA\Chromosome.cs" />
     <Compile Include="Generator.cs" />

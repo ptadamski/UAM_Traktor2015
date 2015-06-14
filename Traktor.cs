@@ -9,15 +9,11 @@ using System.Windows;
 using System.Windows.Threading;
 using TraktorProj.Algorithms;
 using TraktorProj.Commons;
-using TraktorProj.ID3Algorithm;
 
 namespace TraktorProj
 {
     class Traktor
     {
-
-
-
         private Controls controls;
         private static Traktor traktor;
         private int targetX = 1, targetY = 1;
@@ -216,16 +212,11 @@ namespace TraktorProj
 
             orderList.Add(zboze);
             orderList.Add(warzywo);
-            // image = "tractor";
-
-
-
-
-            ID3Sample id3Sample = new ID3Sample("");//tu musi byc jakis load z pliku...
+            // image = "tractor";                   
             string mPora = pora;
+            //treeList = new ID3Sample().GenerateTree("maszyny", "maszyna");
+            var tree = new ID3Sample().GenerateTree(@"..\..\maszyny", "maszyna");
 
-
-            treeList = id3Sample.GenerateTree();
             if (targetX != 1 || targetY != 1)
             {
                 Thread.Sleep(1000);
@@ -237,6 +228,16 @@ namespace TraktorProj
                 order++;
             else
                 order = 0;
+
+            //powinna byc lista parametrow okreslajaca pole...
+            //za kazdym przejsciem przez wezel, 1 pole znika z listy
+            //jezeli lista sie wyczerpie, lub nie zmieni, tzn ze trzeba przerwac
+
+
+            ID3Attrib[] attribs = new ID3Attrib[] { new ID3Attrib("") };
+
+            tree.decide(attribs);
+
 
             for (int i = 0; i < treeList.Count; i++)
             {

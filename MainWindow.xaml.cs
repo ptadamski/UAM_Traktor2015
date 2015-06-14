@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TraktorProj.Commons;
 using TraktorProj.Algorithms;
+using System.Text.RegularExpressions;
 
 
 namespace TraktorProj
@@ -43,7 +44,10 @@ namespace TraktorProj
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
-        {                                        
+        {
+
+            //Regex regex = new Regex("go \\d \\d");
+
             if (e.Key == Key.Enter)
             {                                     
                // ConsoleOutTextBlock.Text += "siema";

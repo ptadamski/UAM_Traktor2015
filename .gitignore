@@ -54,3 +54,5 @@ build/
 *.suo
 *.user
 *.sln.docstates
+*.sdf
+*.opensdf
