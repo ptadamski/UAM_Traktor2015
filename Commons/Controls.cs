@@ -220,7 +220,7 @@ namespace TraktorProj.Commons
 
                     Grid.SetColumn(chw, posx);
                     Grid.SetRow(chw, posy);
-                    main.SetMap2(posx, posy);
+                   
                     ItemImage = new Image();
                     ItemBitmap = new BitmapImage();
                     ItemBitmap.BeginInit();

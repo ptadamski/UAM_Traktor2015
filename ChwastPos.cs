@@ -15,8 +15,10 @@ namespace TraktorProj
     {
         private int[,] istChwast = new int[21,3];
         public Point positions;
+        private MainClass main;
         public ChwastPos()
         {
+            main = new MainClass();
             for (int i = 0; i <= 20 ; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -48,7 +50,8 @@ namespace TraktorProj
 
         public void getPositions(int id)
         {
-            MainClass main = new MainClass();
+            
+            int cnt = 0;
             //Point[] pozycje = new Point []{};
             if (istChwast[1, 2] == 0)
             {
@@ -61,7 +64,7 @@ namespace TraktorProj
             }
             else
             {
-                 int cnt = 0;
+                
                  Point[] pozycje = Enumerable.Repeat<Point>(new Point(0,0),1000).ToArray();
                 for (int i = 1; i <= 20; i++)
                 {
@@ -94,10 +97,12 @@ namespace TraktorProj
                 }
                
                 Random random = new Random();
-                int idpos = random.Next(0, cnt);
+                int idpos = random.Next(0, cnt-1);
 
                 positions = pozycje[idpos];
             }
+            main.SetMap2(positions.X,positions.Y);
+            
 
         }
     }
