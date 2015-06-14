@@ -164,11 +164,18 @@ namespace TraktorProj
                 {
                     ConsoleOutTextBlock.Text += "\r\n> " + "generated";
                     Traktor.Instance.generateParam();
+                    
+                }
+                else if (ConsoleInTextBox.Text == "rozpocznij")
+                {
+                    Traktor.Instance.PoryRokuStart();
+                    
                 }
                 else if (ConsoleInTextBox.Text.Contains("chwast"))
                 {
-                    
-                    controls.createItem("chwast");
+                    ChwastPos ChwP = new ChwastPos();
+                    ChwP.StartSzkodnik();
+                    //controls.createItem("chwast");
                 }
                 else if (ConsoleInTextBox.Text.Contains("losuj"))
                 {

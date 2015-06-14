@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Model\MaszynaRolnicza\Traktor.cs" />
     <Compile Include="Model\Zasob\Resource.cs" />
+    <Compile Include="Param.cs" />
     <Compile Include="Parametry.cs" />
     <Compile Include="Traktor.cs" />
     <Compile Include="Commons\Controls.cs" />

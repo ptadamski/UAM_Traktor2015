@@ -45,8 +45,17 @@ namespace TraktorProj
             this.imageName = imageName;
         }
 
-
-
+        public void PoryRokuStart()
+        {
+            Window window = Application.Current.Windows[0];
+            (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + "wiosna";
+            Thread.Sleep(15000);
+            (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + "lato";
+            Thread.Sleep(15000);
+            (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + "jesien";
+            Thread.Sleep(15000);
+            
+        }
 
 
 

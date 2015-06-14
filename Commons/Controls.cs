@@ -151,6 +151,7 @@ namespace TraktorProj.Commons
             MainClass main = new MainClass();
             int chwastId = ChwastP.getAvaiableId();
             ChwastP.getPositions(chwastId);
+            //ChwastP.generateParam();
             int posx = Convert.ToInt32(ChwastP.positions.X);
             int posy = Convert.ToInt32(ChwastP.positions.Y);
             ChwastP.addChwast(chwastId, posx, posy, 30);

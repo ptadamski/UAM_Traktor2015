@@ -472,5 +472,24 @@ namespace TraktorProj.ID3Algorithm
 	        return TreeList;
 	    }
 
+        public List<string> GenerateTree2()
+        {
+            Attribute pora = new Attribute("pora", new string[] { "jesien", "wiosna", "lato" });
+            Attribute rozrost = new Attribute("rozrost", new string[] { "tak", "nie" });
+            Attribute chodnik = new Attribute("chodnik", new string[] { "tak", "nie" });
+            Attribute trawa = new Attribute("trawa", new string[] { "tak", "nie" });
+            Attribute pole = new Attribute("pole", new string[] { "tak", "nie" });
+            Attribute uprawy = new Attribute("uprawy", new string[] { "tak", "nie" });
+            Attribute[] attributes = new Attribute[] { pora, rozrost, chodnik, trawa, pole, uprawy};
+            DataTable samples = getSampleData(@"..\..\szkodniki");
+
+            DecisionTreeID3 id3 = new DecisionTreeID3();
+            TreeNode root = id3.buildTree(samples, "szkodnik", attributes);
+
+            displayNode(root, "");
+
+            return TreeList;
+        }
+
 	}
 }
