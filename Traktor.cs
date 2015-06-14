@@ -23,6 +23,8 @@ namespace TraktorProj
         private int targetX = 1, targetY = 1;
         private string pora;
         private string imageName;
+        private string fieldImageName;
+        private MainClass main;
         private int order = 0;
         Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
         Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
@@ -51,6 +53,7 @@ namespace TraktorProj
         {
             targetX = x;
             targetY = y;
+            main = new MainClass();
             Thread startThread = new Thread(TraktorThread);
             startThread.IsBackground = true;
 
@@ -85,14 +88,15 @@ namespace TraktorProj
             //
             //zboze.zaorane = "tak";
 
-            //Thread.Sleep(2000); 
-            go();
             
             RunID3();
+            go();
+           // Traktor.Instance.zmienPole(targetX, targetY, fieldImageName);
+           
 
             Thread.Sleep(1000);
-            //targetY = targetX = 1;
-            //go();
+            targetY = targetX = 1;
+            go();
 
             // }          
         }
@@ -179,25 +183,25 @@ namespace TraktorProj
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                   DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveLeft(imageName)));
+                  new Action(() => controls.TractorMooveLeft(imageName,targetX,targetY,fieldImageName)));
                 }
                 else if (dir == 1)
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                   DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveRight(imageName)));
+                  new Action(() => controls.TractorMooveRight(imageName, targetX, targetY, fieldImageName)));
                 }
                 else if (dir == 2)
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                   DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveDown(imageName)));
+                  new Action(() => controls.TractorMooveDown(imageName, targetX, targetY, fieldImageName)));
                 }
                 else if (dir == 0)
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                   DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveUp(imageName)));
+                  new Action(() => controls.TractorMooveUp(imageName, targetX, targetY, fieldImageName)));
 
                 }
 
@@ -258,6 +262,7 @@ namespace TraktorProj
                                         {
                                             targetX = orderList[order].poleX;
                                             targetY = orderList[order].poleY;
+                                           
                                             string maszyna = treeList[zz].Split(':')[1];
                                             orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                             imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -490,6 +495,10 @@ namespace TraktorProj
                 }
             }
 
+            if (imageName == "kombajn") {
+                main.SetMap3(targetX, targetY, 1);
+                fieldImageName = "field3";
+            }
         }
 
         private void changeParameter(string maszyna, Parametry p)
@@ -534,6 +543,16 @@ namespace TraktorProj
 
 
                 (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n>Wylosowana pozycja: " + posx + " " + posy;
+            }
+        }
+
+        public void zmienPole(int x, int y, string field)
+        {
+            Window window = Application.Current.Windows[0];
+
+            if (window.GetType() == typeof(MainWindow))
+            {
+                (window as MainWindow).setTile(x, y, field);
             }
         }
     }
