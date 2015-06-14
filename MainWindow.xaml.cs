@@ -75,8 +75,8 @@ namespace TraktorProj
             ItemTemp.Stretch = Stretch.UniformToFill;
             ItemTemp.Source = ItemBitmap;
             (window as MainWindow).MainGrid.Children.Add(ItemTemp);
-            Grid.SetRow(ItemTemp, posx);
-            Grid.SetColumn(ItemTemp, posy);
+            Grid.SetRow(ItemTemp, posy);
+            Grid.SetColumn(ItemTemp, posx);
 
             allTiles.Add((Image)ItemTemp);
 

@@ -68,7 +68,7 @@ namespace TraktorProj.Commons
                     (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + newX + " " + newY;
                     Grid.SetColumn((window as MainWindow).TraktorImg, newX);
                     Grid.SetRow((window as MainWindow).TraktorImg, newY);
-
+                    Grid.SetZIndex((window as MainWindow).TraktorImg, 1000);
                     TraktorImage = new Image();
                     TraktorBitmap = new BitmapImage();
                     TraktorBitmap.BeginInit();
