@@ -22,6 +22,7 @@ namespace TraktorProj
         public int poleX;
         public int poleY;
         public string rodzaj;
+        public double wzrost=0;
 
       public  Parametry(RodzajUprawy r)
         {

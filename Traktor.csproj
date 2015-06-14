@@ -162,6 +162,19 @@
   <ItemGroup>
     <Resource Include="Images\chwast.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\zabronowane.png" />
+    <Resource Include="Images\zamlocone.png" />
+    <Resource Include="Images\zaorane.png" />
+    <Resource Include="Images\zapryskane.png" />
+    <Resource Include="Images\zasiane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rozsiane.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

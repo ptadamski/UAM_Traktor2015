@@ -24,8 +24,9 @@ namespace TraktorProj
         private string pora;
         private string imageName;
         private string fieldImageName;
-        private MainClass main;
+        private MainClass main = new MainClass();
         private int order = 0;
+        int i = 0;
         Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
         Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
 
@@ -53,7 +54,7 @@ namespace TraktorProj
         {
             targetX = x;
             targetY = y;
-            main = new MainClass();
+           
             Thread startThread = new Thread(TraktorThread);
             startThread.IsBackground = true;
 
@@ -75,7 +76,14 @@ namespace TraktorProj
 
         private void TraktorThread()
         {
-            // while(true){
+            i++;
+
+            if (i % 3 == 0)
+            {
+                generateHeight();
+                i = 0;
+            }
+           //  while(true){
             // generateParam();
            
             if (controls.posX > 1 && controls.posY > 1)
@@ -92,28 +100,60 @@ namespace TraktorProj
             RunID3();
             if (imageName == "kombajn")
             {
-                //main.SetMap3(targetX, targetY, 1);
+                main.SetMap3(targetX, targetY, 1);
                 fieldImageName = "zamlocone";
             }
             if (imageName == "brona")
             {
-                //main.SetMap3(targetX, targetY, 1);
+                main.SetMap3(targetX, targetY, 2);
                 fieldImageName = "zabronowane";
             }
             if (imageName == "plug")
             {
-                //main.SetMap3(targetX, targetY, 1);
+                main.SetMap3(targetX, targetY, 3);
                 fieldImageName = "zaorane";
             }
             if (imageName == "deszczownia")
             {
-                //main.SetMap3(targetX, targetY, 1);
+                main.SetMap3(targetX, targetY, 4);
                 fieldImageName = "zapryskane";
             }
             if (imageName == "sadzarka")
             {
-                //main.SetMap3(targetX, targetY, 1);
+                main.SetMap3(targetX, targetY, 5);
                 fieldImageName = "zasiane";
+            }
+            if (imageName == "rozrzutnik")
+            {
+                main.SetMap3(targetX, targetY, 6);
+                fieldImageName = "rozsiane";
+            }
+            if (warzywo.wzrost < 0 && warzywo.wzrost>-1)
+            {
+                imageName = "sadzarka";
+                main.SetMap3(targetX, targetY, 6);
+                fieldImageName = "zasiane";
+            }
+            if (zboze.wzrost <0 && zboze.wzrost>-1)
+            {
+                imageName = "siewnik";
+                main.SetMap3(targetX, targetY, 6);
+                fieldImageName = "zasiane";
+            }
+
+            if (warzywo.wzrost >= 1)
+            {
+                imageName = "kopaczka";
+                main.SetMap3(targetX, targetY, 6);
+                fieldImageName = "zamlocone";
+                warzywo.wzrost = -1;
+            }
+            if (zboze.wzrost >=1)
+            {
+                imageName = "kombajn";
+                main.SetMap3(targetX, targetY, 6);
+                fieldImageName = "zamlocone";
+                zboze.wzrost = -1;
             }
 
             go();
@@ -125,6 +165,13 @@ namespace TraktorProj
             go();
 
             // }          
+        }
+
+
+        public void generateHeight()
+        {
+            zboze.wzrost += 0.2;
+            warzywo.wzrost += 0.2;
         }
 
         public void generateParam()
