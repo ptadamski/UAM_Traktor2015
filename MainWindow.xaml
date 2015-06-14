@@ -217,7 +217,11 @@
 
         <!-- traktor -->
        <Image Name="TraktorImg" Grid.Column="1" Grid.Row="1"  Source="/Images/tractor.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
-       <Grid.RowDefinitions>
+
+
+        <Image Name="item1" Grid.Column="5" Grid.Row="5"  Source="/Images/brona.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+
+        <Grid.RowDefinitions>
             <RowDefinition Height="16*"/>
             <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>

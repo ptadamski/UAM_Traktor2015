@@ -20,6 +20,10 @@ namespace TraktorProj.Commons
 
         private Image TraktorImage;
         private BitmapImage TraktorBitmap;
+
+        private Image ItemImage;
+        private BitmapImage ItemBitmap;
+
         public int posX;
         public int posY;
 
@@ -53,8 +57,9 @@ namespace TraktorProj.Commons
         /// top: move=1, right: move=2, down: move=3, left: move=4
         public bool Move(int newX, int newY, int move, String bitmap)
         {
-            foreach (Window window in Application.Current.Windows)
-            {
+            Window window = Application.Current.Windows[0];
+            
+
                 if (window.GetType() == typeof (MainWindow))
                 {
 
@@ -99,7 +104,7 @@ namespace TraktorProj.Commons
                    
                    
                 }
-            }
+            
             posX = newX;
             posY = newY;
 
@@ -131,6 +136,36 @@ namespace TraktorProj.Commons
                 }
             }
            
+        }
+
+        public bool createItem(int posx,int posy,string bitmap)
+        {
+            
+                Window window = Application.Current.Windows[0];
+
+                if (window.GetType() == typeof(MainWindow))
+                {
+                    (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n Item " + bitmap + " " + posx + " " + posy;
+                    Grid.SetColumn((window as MainWindow).item1, posx);
+                    Grid.SetRow((window as MainWindow).item1, posy);
+
+                    ItemImage = new Image();
+                    ItemBitmap = new BitmapImage();
+                    ItemBitmap.BeginInit();
+                    ItemBitmap.UriSource = new Uri("/Images/" + bitmap + ".png", UriKind.Relative);
+
+
+
+                    ItemBitmap.EndInit();
+                    ItemImage.Stretch = Stretch.UniformToFill;
+                    ItemImage.Source = ItemBitmap;
+
+
+                    (window as MainWindow).item1.Source = ItemImage.Source;
+
+                }
+           
+            return true;
         }
 
         /// <summary>

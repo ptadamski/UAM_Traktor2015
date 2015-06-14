@@ -74,9 +74,10 @@ namespace TraktorProj
         {
             // while(true){
             // generateParam();
+           
             if (controls.posX > 1 && controls.posY > 1)
             {
-                targetY = targetX = 1;
+               // targetY = targetX = 1;
                 go();
                 Thread.Sleep(6000);
             }
@@ -86,7 +87,8 @@ namespace TraktorProj
 
             //Thread.Sleep(2000); 
             go();
-            RunID3();
+            
+            //RunID3();
 
             Thread.Sleep(1000);
             //targetY = targetX = 1;

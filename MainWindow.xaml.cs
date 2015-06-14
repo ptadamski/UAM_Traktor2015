@@ -87,6 +87,10 @@ namespace TraktorProj
                     ConsoleOutTextBlock.Text += "\r\n> " + "generated";
                     Traktor.Instance.generateParam();
                 }
+                else if (ConsoleInTextBox.Text.Contains("chwast"))
+                {
+                     controls.createItem(9, 8, "deszczownia");
+                }
                 else if (ConsoleInTextBox.Text.Contains("go"))
                 {
 
