@@ -111,6 +111,7 @@ namespace TraktorProj.Commons
 
             if (posX == targetX && posY == targetY)
             {
+                if(targetX!=1 && targetY!=1)
                 (window as MainWindow).setTile(targetX, targetY, fieldName);
             }
             

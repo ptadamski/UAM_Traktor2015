@@ -28,7 +28,7 @@ namespace TraktorProj
             this.uprawa = r;
             if (r.Equals(RodzajUprawy.warzywo))
             {
-                poleX = 2;
+                poleX = 3;
                 poleY = 2;
                 rodzaj = "warzywo";
             }
@@ -38,6 +38,7 @@ namespace TraktorProj
                 poleY = 6;
                 rodzaj = "zboze";
             }
+
         }
 
        

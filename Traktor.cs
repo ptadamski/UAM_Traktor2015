@@ -90,6 +90,32 @@ namespace TraktorProj
 
             
             RunID3();
+            if (imageName == "kombajn")
+            {
+                //main.SetMap3(targetX, targetY, 1);
+                fieldImageName = "zamlocone";
+            }
+            if (imageName == "brona")
+            {
+                //main.SetMap3(targetX, targetY, 1);
+                fieldImageName = "zabronowane";
+            }
+            if (imageName == "plug")
+            {
+                //main.SetMap3(targetX, targetY, 1);
+                fieldImageName = "zaorane";
+            }
+            if (imageName == "deszczownia")
+            {
+                //main.SetMap3(targetX, targetY, 1);
+                fieldImageName = "zapryskane";
+            }
+            if (imageName == "sadzarka")
+            {
+                //main.SetMap3(targetX, targetY, 1);
+                fieldImageName = "zasiane";
+            }
+
             go();
            // Traktor.Instance.zmienPole(targetX, targetY, fieldImageName);
            
@@ -495,10 +521,7 @@ namespace TraktorProj
                 }
             }
 
-            if (imageName == "kombajn") {
-                main.SetMap3(targetX, targetY, 1);
-                fieldImageName = "field3";
-            }
+           
         }
 
         private void changeParameter(string maszyna, Parametry p)
