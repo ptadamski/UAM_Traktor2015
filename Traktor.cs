@@ -520,6 +520,22 @@ namespace TraktorProj
 
 
         }
+
+        public void LosujPos()
+        {
+            Random random = new Random();
+            int posx = random.Next(1, 15);
+            int posy = random.Next(1, 10);
+            Window window = Application.Current.Windows[0];
+
+
+            if (window.GetType() == typeof(MainWindow))
+            {
+
+
+                (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n>Wylosowana pozycja: " + posx + " " + posy;
+            }
+        }
     }
 }
 

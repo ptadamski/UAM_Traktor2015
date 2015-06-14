@@ -20,6 +20,7 @@ namespace TraktorProj.Commons
 
         private Image TraktorImage;
         private BitmapImage TraktorBitmap;
+        private ChwastPos ChwastP;
 
         private Image ItemImage;
         private BitmapImage ItemBitmap;
@@ -33,7 +34,7 @@ namespace TraktorProj.Commons
         public Controls()
         {
 
-
+            ChwastP = new ChwastPos();
             posX = 1;
             posY = 1;
             try
@@ -138,17 +139,88 @@ namespace TraktorProj.Commons
            
         }
 
-        public bool createItem(int posx,int posy,string bitmap)
+        public bool createItem(string bitmap)
         {
-            
+            MainClass main = new MainClass();
+            int chwastId = ChwastP.getAvaiableId();
+            ChwastP.getPositions(chwastId);
+            int posx = Convert.ToInt32(ChwastP.positions.X);
+            int posy = Convert.ToInt32(ChwastP.positions.Y);
+            ChwastP.addChwast(chwastId, posx, posy, 30);
                 Window window = Application.Current.Windows[0];
-
+                (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n Id" + chwastId;
                 if (window.GetType() == typeof(MainWindow))
-                {
+                { 
+                    Image chw = new Image();
+                    switch(chwastId)
+                    {
+                        case 1:
+                            chw = (window as MainWindow).chwast1;
+                            break;
+                        case 2:
+                            chw = (window as MainWindow).chwast2;
+                            break;
+                        case 3:
+                            chw = (window as MainWindow).chwast3;
+                            break;
+                        case 4:
+                            chw = (window as MainWindow).chwast4;
+                            break;
+                        case 5:
+                            chw = (window as MainWindow).chwast5;
+                            break;
+                        case 6:
+                            chw = (window as MainWindow).chwast6;
+                            break;
+                        case 7:
+                            chw = (window as MainWindow).chwast7;
+                            break;
+                        case 8:
+                            chw = (window as MainWindow).chwast8;
+                            break;
+                        case 9:
+                            chw = (window as MainWindow).chwast9;
+                            break;
+                        case 10:
+                            chw = (window as MainWindow).chwast10;
+                            break;
+                        case 11:
+                            chw = (window as MainWindow).chwast11;
+                            break;
+                        case 12:
+                            chw = (window as MainWindow).chwast12;
+                            break;
+                        case 13:
+                            chw = (window as MainWindow).chwast13;
+                            break;
+                        case 14:
+                            chw = (window as MainWindow).chwast14;
+                            break;
+                        case 15:
+                            chw = (window as MainWindow).chwast15;
+                            break;
+                        case 16:
+                            chw = (window as MainWindow).chwast16;
+                            break;
+                        case 17:
+                            chw = (window as MainWindow).chwast17;
+                            break;
+                        case 18:
+                            chw = (window as MainWindow).chwast18;
+                            break;
+                        case 19:
+                            chw = (window as MainWindow).chwast19;
+                            break;
+                        case 20:
+                            chw = (window as MainWindow).chwast20;
+                            break;
+                    }
+                    
                     (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n Item " + bitmap + " " + posx + " " + posy;
-                    Grid.SetColumn((window as MainWindow).item1, posx);
-                    Grid.SetRow((window as MainWindow).item1, posy);
 
+                    Grid.SetColumn(chw, posx);
+                    Grid.SetRow(chw, posy);
+                    main.SetMap2(posx, posy);
                     ItemImage = new Image();
                     ItemBitmap = new BitmapImage();
                     ItemBitmap.BeginInit();
@@ -161,7 +233,7 @@ namespace TraktorProj.Commons
                     ItemImage.Source = ItemBitmap;
 
 
-                    (window as MainWindow).item1.Source = ItemImage.Source;
+                    chw.Source = ItemImage.Source;
 
                 }
            

@@ -68,6 +68,7 @@
     <Compile Include="Algorithms\ID3.cs" />
     <Compile Include="Algorithms\Main.cs" />
     <Compile Include="Algorithms\RAM.cs" />
+    <Compile Include="ChwastPos.cs" />
     <Compile Include="Commons\CSV.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -158,6 +159,9 @@
     <Resource Include="Images\plug.png" />
     <Resource Include="Images\rozrzutnik.png" />
     <Resource Include="Images\sadzarka.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\chwast.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

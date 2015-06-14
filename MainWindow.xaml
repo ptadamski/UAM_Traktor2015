@@ -219,7 +219,28 @@
        <Image Name="TraktorImg" Grid.Column="1" Grid.Row="1"  Source="/Images/tractor.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
 
 
-        <Image Name="item1" Grid.Column="5" Grid.Row="5"  Source="/Images/brona.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast1" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast2" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast3" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast4" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast5" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast6" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast7" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast8" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast9" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast10" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast11" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast12" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast13" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast14" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast15" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast16" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast17" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast18" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast19" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+        <Image Name="chwast20" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
+
+        
 
         <Grid.RowDefinitions>
             <RowDefinition Height="16*"/>

@@ -89,7 +89,13 @@ namespace TraktorProj
                 }
                 else if (ConsoleInTextBox.Text.Contains("chwast"))
                 {
-                     controls.createItem(9, 8, "deszczownia");
+                    
+                    controls.createItem("chwast");
+                }
+                else if (ConsoleInTextBox.Text.Contains("losuj"))
+                {
+                    ConsoleOutTextBlock.Text += "\r\nlosuje";
+                    Traktor.Instance.LosujPos();
                 }
                 else if (ConsoleInTextBox.Text.Contains("go"))
                 {
