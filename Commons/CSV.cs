@@ -45,7 +45,7 @@ namespace TraktorProj.Commons
             {
                 var items = line.Split(separator);
 
-                if (header)
+                if (header)  //TO DO : columny zawsze powinny byc dodawane, w tym ukladzie nie sa
                 {
                     for (int i = 0, length = items.Length; i < length; i++)
                         table.Columns.Add(new DataColumn(items[i]));

@@ -246,7 +246,7 @@ namespace TraktorProj
             orderList.Add(wiosna);
            
             // image = "tractor";
-            ID3Sample id3Sample = new ID3Sample("");
+            ID3Sample id3Sample = new ID3Sample();
 
             treeList = id3Sample.GenerateTree2();
  

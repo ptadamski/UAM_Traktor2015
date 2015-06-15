@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using TraktorProj.Algorithms;
 using TraktorProj.Commons;
@@ -13,41 +15,88 @@ using TraktorProj.ID3Algorithm;
 
 namespace TraktorProj
 {
+    public delegate void OnTileDrawEvent(int posx, int posy, string sprite, Rotation rot);
+
     class Traktor
     {
 
 
-
+        MainWindow window = null;
+        Random random = new System.Random();
         private Controls controls;
-        private static Traktor traktor;
         private int targetX = 1, targetY = 1;
         private string pora;
         private string imageName;
         private string fieldImageName;
         private MainClass main = new MainClass();
         private int order = 0;
-        int i = 0;
-        Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
-        Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
+        int i = 0;                                       
+        Queue<Parametry> zadania = new Queue<Parametry>();
+        IList<Parametry> uprawy = new List<Parametry>();
+        //event OnTileDrawEvent tileDrawer;
+
+        //Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
+        //Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
 
 
-        public static Traktor Instance
+        //public static Traktor Instance
+        //{
+        //    get
+        //    {
+        //        return traktor = traktor ?? new Traktor("tractor");
+        //    }
+        //}
+
+        public Traktor(MainWindow window, string imageName)
         {
-            get
-            {
-                return traktor = traktor ?? new Traktor("tractor");
-            }
-        }
-
-        public Traktor(string imageName)
-        {
+            this.window = window;
+            //this.tileDrawer += tileDrawer;
             this.controls = new Controls();
             this.imageName = imageName;
+            this.Update(true);                              
+        }
+
+        public void Update(bool initFromFile = false)
+        {
+            if (initFromFile)
+            {
+                uprawy.Clear();
+                zadania.Clear();
+
+                DataTable tabUprawy = new CSV(@"..\..\MapaUpraw", ',', true).Table;
+                DataTable tabRynek = new CSV(@"..\..\KsiegaRoslin", ',', true).Table;
+
+                IDictionary<string, string> katalog = new Dictionary<string, string>();
+
+                var wyliczenieProduktow = tabRynek.AsEnumerable();
+
+                foreach (var produkt in wyliczenieProduktow)
+                    katalog.Add(produkt["uprawa"] as string, produkt["rodzaj"] as string);
+
+                Parametry param = null;
+                for (int i = 0; i < tabUprawy.Rows.Count && i<5; i++)
+                {
+                    for (int j = 0; j < tabUprawy.Columns.Count && j<5; j++)
+                    {
+                        var uprawa = tabUprawy.Rows[i].ItemArray[j] as string;
+
+                        if (katalog[uprawa].Equals("warzywo"))
+                            param = new Parametry("warzywo", j+1, i+1);
+                        else if (katalog[uprawa].Equals("zboze"))
+                            param = new Parametry("zboze", j+1 ,i+1);
+                        uprawy.Add(param);
+                        //param.Randomize();
+                    }
+                }
+            }
+
+            foreach (var param in uprawy)
+                zadania.Enqueue(param);
         }
 
         public void PoryRokuStart()
         {
-            Window window = Application.Current.Windows[0];
+            //Window window = Application.Current.Windows[0];
             (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + "wiosna";
             Thread.Sleep(15000);
             (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + "lato";
@@ -63,8 +112,11 @@ namespace TraktorProj
         {
             targetX = x;
             targetY = y;
-           
-            Thread startThread = new Thread(TraktorThread);
+
+            Update();
+
+            
+        Thread startThread = new Thread(TraktorThread);
             startThread.IsBackground = true;
 
             startThread.Start();
@@ -75,7 +127,9 @@ namespace TraktorProj
         public void StartTraktor(string p)
         {
             pora = p;
-            Thread startThread = new Thread(TraktorThread);
+
+            Update();
+        Thread startThread = new Thread(TraktorThread);
             startThread.IsBackground = true;
 
             startThread.Start();
@@ -99,14 +153,14 @@ namespace TraktorProj
             {
                // targetY = targetX = 1;
                 go();
-                Thread.Sleep(6000);
+                Thread.Sleep(1000);
             }
 
             //
             //zboze.zaorane = "tak";
 
-            
-            RunID3();
+
+            RunID3(@"..\..\maszyny", "maszyna", zadania);
             if (imageName == "kombajn")
             {
                 main.SetMap3(targetX, targetY, 1);
@@ -137,106 +191,78 @@ namespace TraktorProj
                 main.SetMap3(targetX, targetY, 6);
                 fieldImageName = "rozsiane";
             }
-            if (warzywo.wzrost < 0 && warzywo.wzrost>-1)
-            {
-                imageName = "sadzarka";
-                main.SetMap3(targetX, targetY, 6);
-                fieldImageName = "zasiane";
-            }
-            if (zboze.wzrost <0 && zboze.wzrost>-1)
-            {
-                imageName = "siewnik";
-                main.SetMap3(targetX, targetY, 6);
-                fieldImageName = "zasiane";
-            }
 
-            if (warzywo.wzrost >= 1)
+            foreach (var param in uprawy)
             {
-                imageName = "kopaczka";
-                main.SetMap3(targetX, targetY, 6);
-                fieldImageName = "zamlocone";
-                warzywo.wzrost = -1;
-            }
-            if (zboze.wzrost >=1)
-            {
-                imageName = "kombajn";
-                main.SetMap3(targetX, targetY, 6);
-                fieldImageName = "zamlocone";
-                zboze.wzrost = -1;
+                if (param.rodzaj == "warzywo")
+                {
+                    if (param.wzrost <= 0)
+                    {
+                        imageName = "sadzarka";
+                        main.SetMap3(targetX, targetY, 6);
+                        fieldImageName = "zasiane";
+                    }
+                    else if (param.wzrost >= 1)
+                    {
+                        imageName = "kopaczka";
+                        main.SetMap3(targetX, targetY, 6);
+                        fieldImageName = "zamlocone";
+                        param.wzrost = 1.1;
+                    }
+
+                }
+                else if (param.rodzaj == "zboze")
+                {
+                    if (param.wzrost <= 0)
+                    {
+                        imageName = "siewnik";
+                        main.SetMap3(targetX, targetY, 6);
+                        fieldImageName = "zasiane";
+                    }
+                    else if (param.wzrost >= 1)
+                    {
+                        imageName = "kombajn";
+                        main.SetMap3(targetX, targetY, 6);
+                        fieldImageName = "zamlocone";
+                        param.wzrost = 1.1;
+                    }
+
+                }
+
             }
 
             go();
            // Traktor.Instance.zmienPole(targetX, targetY, fieldImageName);
            
 
+            
             Thread.Sleep(1000);
-            targetY = targetX = 1;
-            go();
 
-            // }          
+            if (zadania.Count!=0)
+                TraktorThread();
+            //targetY = targetX = 1;
+            //go();
+
+            // }      
         }
 
 
         public void generateHeight()
         {
-            zboze.wzrost += 0.2;
-            warzywo.wzrost += 0.2;
+            foreach (var param in uprawy)
+            {
+                param.wzrost += 0.4;
+                //if (tileDrawer != null)
+                //    tileDrawer(param.poleX, param.poleY, param.rodzaj, Rotation.Rotate0);
+            }
         }
 
         public void generateParam()
         {
-            Random
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 123) % 2 == 1) zboze.bronowane = "nie";
-            else zboze.bronowane = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 168) % 2 == 1) zboze.mineraly = "nie";
-            else zboze.mineraly = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 111) % 2 == 1) zboze.susza = "nie";
-            else zboze.susza = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 57) % 2 == 1) zboze.zaorane = "nie";
-            else zboze.zaorane = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 42) % 2 == 1) zboze.zasiane = "nie";
-            else zboze.zasiane = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 79) % 2 == 1) zboze.zbior = "nie";
-            else zboze.zbior = "tak";
-
-
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 12) % 2 == 1) warzywo.bronowane = "tak";
-            else warzywo.bronowane = "nie";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 156) % 2 == 1) warzywo.mineraly = "nie";
-            else warzywo.mineraly = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 161) % 2 == 1) warzywo.susza = "tak";
-            else warzywo.susza = "nie";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 149) % 2 == 1) warzywo.zaorane = "nie";
-            else warzywo.zaorane = "tak";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 169) % 2 == 1) warzywo.zasiane = "tak";
-            else warzywo.zasiane = "nie";
-
-            losuj = new System.Random(DateTime.Now.Millisecond); // 1 przypadek
-            if (losuj.Next(1, 1698) % 2 == 1) warzywo.zbior = "nie";
-            else warzywo.zbior = "tak";
-
-
+            foreach (var param in uprawy)
+            {
+                param.Randomize();
+            }
         }
 
         private void go()
@@ -296,35 +322,44 @@ namespace TraktorProj
         /// <summary>
         /// pobierając liste klientów zwróci Point kolejnego do którego ma się udać
         /// </summary>
-        private void RunID3()
+        private void RunID3(string filepath, string attribName, 
+            Queue<Parametry> orderList)
         {
             List<string> treeList = new List<string>();
-            List<Parametry> orderList = new List<Parametry>();
-            orderList.Clear();
+            //List<Parametry> orderList = new List<Parametry>();
+            //orderList.Clear();
 
-            orderList.Add(zboze);
-            orderList.Add(warzywo);
+            //orderList.Add(zboze);
+            //orderList.Add(warzywo);
             // image = "tractor";
 
+            ID3Sample id3Sample = new ID3Sample();//tu musi byc jakis load z pliku...
+            string mPora = pora;  
 
+            if (orderList.Count == 0)
+                return;       
 
-
-            ID3Sample id3Sample = new ID3Sample("");//tu musi byc jakis load z pliku...
-            string mPora = pora;
-
-
-            treeList = id3Sample.GenerateTree();
-            if (targetX != 1 || targetY != 1)
-            {
-                Thread.Sleep(1000);
-                targetY = 1;
-                targetX = 1;
+            if (mPora == null)
                 return;
-            }
-            if (order < orderList.Count - 1)
-                order++;
-            else
-                order = 0;
+
+
+            treeList = id3Sample.GenerateTree(filepath, attribName);
+            //if (targetX != 1 || targetY != 1)
+            //{
+            //    Thread.Sleep(1000);
+            //    targetY = 1;
+            //    targetX = 1;
+            //    return;
+            //}
+            //if (order < orderList.Count - 1)
+             //   order++;
+            //else
+            //    order = 0;
+
+
+            var order = orderList.Dequeue();
+            Console.WriteLine("x={0} y={1} roslina={2}", order.poleX, order.poleY, order.rodzaj);
+
 
             for (int i = 0; i < treeList.Count; i++)
             {
@@ -336,48 +371,48 @@ namespace TraktorProj
                         {
                             for (int l = j + 1; l < treeList.Count; l++)
                             {
-                                if (treeList[l].Contains(orderList[order].rodzaj))
+                                if (treeList[l].Contains(order.rodzaj))
                                 {
                                     for (int zz = l + 1; zz < treeList.Count; zz++)
                                     {
                                         if (treeList[zz].Contains(":"))
                                         {
-                                            targetX = orderList[order].poleX;
-                                            targetY = orderList[order].poleY;
+                                            targetX = order.poleX;
+                                            targetY = order.poleY;
                                            
                                             string maszyna = treeList[zz].Split(':')[1];
-                                            orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                            order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                             imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                            changeParameter(imageName, orderList[order]);
+                                            changeParameter(imageName, order);
                                             return;
                                         }
 
                                         if (treeList[zz].Contains("bronowane"))
                                         {
-                                            if (treeList[zz + 1].Contains(orderList[order].bronowane))
+                                            if (treeList[zz + 1].Contains(order.bronowane))
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);   
                                                     return;
                                                 }
                                             }
 
-                                            if (treeList[zz + 3].Contains(orderList[order].bronowane))
+                                            if (treeList[zz + 3].Contains(order.bronowane))
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
@@ -385,30 +420,30 @@ namespace TraktorProj
 
                                         if (treeList[zz].Contains("zasiane"))
                                         {
-                                            if (treeList[zz + 1].Contains(orderList[order].zasiane))
+                                            if (treeList[zz + 1].Contains(order.zasiane))
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
 
-                                            if (treeList[zz + 3].Contains(orderList[order].zasiane))
+                                            if (treeList[zz + 3].Contains(order.zasiane))
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
@@ -416,30 +451,30 @@ namespace TraktorProj
 
                                         if (treeList[zz].Contains("zaorane"))
                                         {
-                                            if (treeList[zz + 1].Contains(orderList[order].zaorane))
+                                            if (treeList[zz + 1].Contains(order.zaorane))
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
 
-                                            if (treeList[zz + 3].Contains(orderList[order].zaorane))
+                                            if (treeList[zz + 3].Contains(order.zaorane))
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
@@ -447,30 +482,30 @@ namespace TraktorProj
 
                                         if (treeList[zz].Contains("susza"))
                                         {
-                                            if (treeList[zz + 1].Contains(orderList[order].susza))
+                                            if (treeList[zz + 1].Contains(order.susza))
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
 
-                                            if (treeList[zz + 3].Contains(orderList[order].susza))
+                                            if (treeList[zz + 3].Contains(order.susza))
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
@@ -478,60 +513,60 @@ namespace TraktorProj
 
                                         if (treeList[zz].Contains("mineraly"))
                                         {
-                                            if (treeList[zz + 1].Contains(orderList[order].mineraly))
+                                            if (treeList[zz + 1].Contains(order.mineraly))
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
 
-                                            if (treeList[zz + 3].Contains(orderList[order].mineraly))
+                                            if (treeList[zz + 3].Contains(order.mineraly))
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
                                         }
                                         if (treeList[zz].Contains("zbior"))
                                         {
-                                            if (treeList[zz + 1].Contains(orderList[order].zbior))
+                                            if (treeList[zz + 1].Contains(order.zbior))
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
 
-                                            if (treeList[zz + 3].Contains(orderList[order].zbior))
+                                            if (treeList[zz + 3].Contains(order.zbior))
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetX = order.poleX;
+                                                    targetY = order.poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
-                                                    orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                    order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                    changeParameter(imageName, orderList[order]);
+                                                    changeParameter(imageName, order);
                                                     return;
                                                 }
                                             }
@@ -546,19 +581,19 @@ namespace TraktorProj
                                         {
                                             for (int zzz = zz + 1; zzz < treeList.Count; zzz++)
                                             {
-                                                if (treeList[zzz].Contains(orderList[order].mineraly))
+                                                if (treeList[zzz].Contains(order.mineraly))
                                                 {
 
                                                     for (int z = zzz + 1; z < treeList.Count; z++)
                                                     {
                                                         if (treeList[z].Contains(":"))
                                                         {
-                                                            targetX = orderList[order].poleX;
-                                                            targetY = orderList[order].poleY;
+                                                            targetX = order.poleX;
+                                                            targetY = order.poleY;
                                                             string maszyna = treeList[z].Split(':')[1];
-                                                            orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
+                                                            order.maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                             imageName = maszyna.Substring(0, maszyna.Length - 1);
-                                                            changeParameter(imageName, orderList[order]);
+                                                            changeParameter(imageName, order);
                                                             return;
                                                         }
                                                     }
@@ -582,6 +617,7 @@ namespace TraktorProj
 
         private void changeParameter(string maszyna, Parametry p)
         {
+            Console.WriteLine("wybrano maszyne: {0}", maszyna);
             if (maszyna.Equals("plug")) { if (p.zaorane.Equals("tak")) { p.zaorane = "nie"; } else { p.zaorane = "tak"; } }
             if (maszyna.Equals("brona")) { if (p.bronowane.Equals("tak")) { p.bronowane = "nie"; } else { p.bronowane = "tak"; } }
             if (maszyna.Equals("kombajn")) { if (p.zbior.Equals("tak")) { p.zbior = "nie"; } else { p.zbior = "tak"; } }
@@ -614,7 +650,7 @@ namespace TraktorProj
             Random random = new Random();
             int posx = random.Next(1, 15);
             int posy = random.Next(1, 10);
-            Window window = Application.Current.Windows[0];
+            //Window window = Application.Current.Windows[0];
 
 
             if (window.GetType() == typeof(MainWindow))
@@ -627,7 +663,7 @@ namespace TraktorProj
 
         public void zmienPole(int x, int y, string field)
         {
-            Window window = Application.Current.Windows[0];
+            //Window window = Application.Current.Windows[0];
 
             if (window.GetType() == typeof(MainWindow))
             {

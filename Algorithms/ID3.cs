@@ -8,24 +8,25 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using TraktorProj.Commons;
+using System.Linq;
 
 namespace TraktorProj.ID3Algorithm
 {
 
-	public class Attribute
+	public class ID3Attrib
 	{
 		ArrayList mValues;
 		string mName;
 		object mLabel;
 
-		public Attribute(string name, string[] values)
+		public ID3Attrib(string name, string[] values)
 		{
 			mName = name;
 			mValues = new ArrayList(values);
 			mValues.Sort();
 		}
 
-		public Attribute(object Label)
+		public ID3Attrib(object Label)
 		{
 			mLabel = Label;
 			mName = string.Empty;
@@ -88,9 +89,9 @@ namespace TraktorProj.ID3Algorithm
 	public class TreeNode
 	{
 		private ArrayList mChilds = null;
-		private Attribute mAttribute;
+		private ID3Attrib mAttribute;
 
-		public TreeNode(Attribute attribute)
+		public TreeNode(ID3Attrib attribute)
 		{
 			if (attribute!=null && attribute.values != null)
 			{
@@ -125,7 +126,7 @@ namespace TraktorProj.ID3Algorithm
 			return (TreeNode)mChilds[index];
 		}
 
-		public Attribute attribute
+		public ID3Attrib attribute
 		{
 			get
 			{
@@ -191,7 +192,7 @@ namespace TraktorProj.ID3Algorithm
         /// <param name="value"></param>
         /// <param name="positives"></param>
         /// <param name="negatives"></param>
-		private void getValuesToAttribute(DataTable samples, Attribute attribute, string value, out int positives, out int negatives)
+		private void getValuesToAttribute(DataTable samples, ID3Attrib attribute, string value, out int positives, out int negatives)
 		{
 			positives = 0;
 			negatives = 0;
@@ -212,7 +213,7 @@ namespace TraktorProj.ID3Algorithm
         /// <param name="samples"></param>
         /// <param name="attribute"></param>
         /// <returns></returns>
-		private double calculateGain(DataTable samples, Attribute attribute)
+		private double calculateGain(DataTable samples, ID3Attrib attribute)
 		{
 			string[] values = attribute.values;
 			double sum = 0.0;
@@ -237,12 +238,12 @@ namespace TraktorProj.ID3Algorithm
         /// <param name="samples"></param>
         /// <param name="attributes"></param>
         /// <returns></returns>
-		private Attribute   findBestAttribute(DataTable samples, Attribute[] attributes)
+		private ID3Attrib   findBestAttribute(DataTable samples, ID3Attrib[] attributes)
 		{
 			double maxGain = 0.0;
-			Attribute result = new Attribute("");
+			ID3Attrib result = new ID3Attrib("");
 
-			foreach (Attribute attribute in attributes)
+			foreach (ID3Attrib attribute in attributes)
 			{
 				double gain = calculateGain(samples, attribute);
 				if (gain > maxGain)
@@ -343,7 +344,7 @@ namespace TraktorProj.ID3Algorithm
 			return distinctValues[MaxIndex];
 		}
 
-        private TreeNode internalMountTree(DataTable samples, string targetAttribute, Attribute[] attributes)
+        private TreeNode internalMountTree(DataTable samples, string targetAttribute, ID3Attrib[] attributes)
         {
             if (allSamplesPositives(samples, targetAttribute) == true)
             //return new TreeNode(new Attribute(true));
@@ -360,14 +361,14 @@ namespace TraktorProj.ID3Algorithm
 
             mEntropySet = calcEntropy(mTotalPositives, mTotal - mTotalPositives);
 
-            Attribute bestAttribute = findBestAttribute(samples, attributes);
+            ID3Attrib bestAttribute = findBestAttribute(samples, attributes);
 
             TreeNode root = new TreeNode(bestAttribute);
 
             DataTable aSample = samples.Clone();
             if (bestAttribute.values == null)
             {
-                return new TreeNode(new Attribute(getMostCommonValue(samples, targetAttribute)));
+                return new TreeNode(new ID3Attrib(getMostCommonValue(samples, targetAttribute)));
             }
             else
             {
@@ -393,12 +394,12 @@ namespace TraktorProj.ID3Algorithm
 
                     if (aSample.Rows.Count == 0)
                     {
-                        return new TreeNode(new Attribute(getMostCommonValue(aSample, targetAttribute)));
+                        return new TreeNode(new ID3Attrib(getMostCommonValue(aSample, targetAttribute)));
                     }
                     else
                     {
                         DecisionTreeID3 dc3 = new DecisionTreeID3();
-                        TreeNode ChildNode = dc3.buildTree(aSample, targetAttribute, (Attribute[])aAttributes.ToArray(typeof(Attribute)));
+                        TreeNode ChildNode = dc3.buildTree(aSample, targetAttribute, (ID3Attrib[])aAttributes.ToArray(typeof(ID3Attrib)));
                         root.AddTreeNode(ChildNode, value);
                     }
                 }
@@ -407,7 +408,7 @@ namespace TraktorProj.ID3Algorithm
             return root;
         }
 
-		public TreeNode buildTree(DataTable samples, string targetAttribute, Attribute[] attributes)
+		public TreeNode buildTree(DataTable samples, string targetAttribute, ID3Attrib[] attributes)
 		{
 			mSamples = samples;
 			return internalMountTree(mSamples, targetAttribute, attributes);
@@ -419,11 +420,7 @@ namespace TraktorProj.ID3Algorithm
 	{
 	    public List<string> TreeList = new List<string>();
         private List<object[]> objeclist = new List<object[]>();
-
-        public ID3Sample(string sampleFilepath)
-        {             
-        }
-
+                               
 		public void displayNode(TreeNode root, string tabs)
 		{
 			Console.WriteLine(tabs + "|" + root.attribute + '|');
@@ -452,20 +449,38 @@ namespace TraktorProj.ID3Algorithm
             return csv.Table;
 		}
 
-	    public List<string> GenerateTree()
+	    public List<string> GenerateTree(string filepath, string mainAttribName)
 	    {
-            Attribute pora = new Attribute("pora", new string[] { "jesien", "wiosna", "lato" });
-            Attribute uprawa = new Attribute("uprawa", new string[] { "zboze", "warzywo"});
-            Attribute susza = new Attribute("susza", new string[] { "tak", "nie" });
-            Attribute mineraly = new Attribute("mineraly", new string[] { "tak", "nie" });
-            Attribute zbior = new Attribute("zbior", new string[] { "tak", "nie" });
-            Attribute zaorane = new Attribute("zaorane", new string[] { "tak", "nie" });
-            Attribute bronowane = new Attribute("bronowane", new string[] { "tak", "nie" });
-            Attribute[] attributes = new Attribute[] { pora, uprawa, susza, mineraly, zbior,zaorane, bronowane };
-            DataTable samples = getSampleData(@"..\..\maszyny");
+           
+
+            /*ID3Attrib pora = new ID3Attrib("pora", new string[] { "jesien", "wiosna", "lato" });
+            ID3Attrib uprawa = new ID3Attrib("uprawa", new string[] { "zboze", "warzywo"});
+            ID3Attrib susza = new ID3Attrib("susza", new string[] { "tak", "nie" });
+            ID3Attrib mineraly = new ID3Attrib("mineraly", new string[] { "tak", "nie" });
+            ID3Attrib zbior = new ID3Attrib("zbior", new string[] { "tak", "nie" });
+            ID3Attrib zaorane = new ID3Attrib("zaorane", new string[] { "tak", "nie" });
+            ID3Attrib bronowane = new ID3Attrib("bronowane", new string[] { "tak", "nie" });    */
+
+
+            // { pora, uprawa, susza, mineraly, zbior,zaorane, bronowane };
+            DataTable samples = getSampleData(filepath);
+            var table = samples.AsEnumerable();
+
+
+            ID3Attrib[] attributes = new ID3Attrib[samples.Columns.Count-1];
+            for (int i = 0, j=0, length = samples.Columns.Count; i < length; i++)
+            {
+                if (samples.Columns[i].ColumnName == mainAttribName)
+                    continue;
+
+                var values = table.Select(x => x[i] as string ).Distinct().ToArray();
+
+                attributes[j] = new ID3Attrib(samples.Columns[i].ColumnName, values);
+                j++;
+            }
 
             DecisionTreeID3 id3 = new DecisionTreeID3();
-            TreeNode root = id3.buildTree(samples, "maszyna", attributes);
+            TreeNode root = id3.buildTree(samples, mainAttribName, attributes);
 
             displayNode(root, "");
 
@@ -476,13 +491,13 @@ namespace TraktorProj.ID3Algorithm
         {
 
           
-            Attribute pora = new Attribute("pora", new string[] { "jesien", "wiosna", "lato" });
-            Attribute rozrost = new Attribute("rozrost", new string[] { "tak", "nie" });
-            Attribute chodnik = new Attribute("chodnik", new string[] { "tak", "nie" });
-            Attribute trawa = new Attribute("trawa", new string[] { "tak", "nie" });
-            Attribute pole = new Attribute("pole", new string[] { "tak", "nie" });
-            Attribute uprawy = new Attribute("uprawy", new string[] { "tak", "nie" });
-            Attribute[] attributes = new Attribute[] { pora, rozrost, chodnik, trawa, pole, uprawy};
+            ID3Attrib pora = new ID3Attrib("pora", new string[] { "jesien", "wiosna", "lato" });
+            ID3Attrib rozrost = new ID3Attrib("rozrost", new string[] { "tak", "nie" });
+            ID3Attrib chodnik = new ID3Attrib("chodnik", new string[] { "tak", "nie" });
+            ID3Attrib trawa = new ID3Attrib("trawa", new string[] { "tak", "nie" });
+            ID3Attrib pole = new ID3Attrib("pole", new string[] { "tak", "nie" });
+            ID3Attrib uprawy = new ID3Attrib("uprawy", new string[] { "tak", "nie" });
+            ID3Attrib[] attributes = new ID3Attrib[] { pora, rozrost, chodnik, trawa, pole, uprawy};
             DataTable samples = getSampleData(@"..\..\szkodniki");
 
             DecisionTreeID3 id3 = new DecisionTreeID3();
