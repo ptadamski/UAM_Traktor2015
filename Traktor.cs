@@ -25,16 +25,13 @@ namespace TraktorProj
         private Controls controls;
         private Pos2 targetLocation;
                                         
-        private string imageName = "";
-        private string fieldImageName = "";
+        private string imageName = "";//TO DO : zostawilem, ale fajnie by bylo to ujednolicic
+        private string fieldImageName = "";//TO DO : zostawilem, ale fajnie by bylo to ujednolicic
         private string pora;
-        private MainClass main = new MainClass();
         private int order = 0;
         int i = 0;
         Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
         Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
-
-        Queue<MoveEnum> movementQueue;
 
         public Traktor(IDrawManager<Pos2> drawManager, Pos2 location, string name) :
             base(drawManager, location, name)
@@ -89,58 +86,58 @@ namespace TraktorProj
             RunID3();
             if (imageName == "kombajn")
             {
-                main.SetMap3(targetLocation.X, targetLocation.Y, 1);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 1;//magiczna stala?
                 fieldImageName = "zamlocone";
             }
             if (imageName == "brona")
             {
-                main.SetMap3(targetLocation.X, targetLocation.Y, 2);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 2;   //magiczna stala?
                 fieldImageName = "zabronowane";
             }
             if (imageName == "plug")
             {
-                main.SetMap3(targetLocation.X, targetLocation.Y, 3);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 3;  //magiczna stala?
                 fieldImageName = "zaorane";
             }
             if (imageName == "deszczownia")
             {
-                main.SetMap3(targetLocation.X, targetLocation.Y, 4);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 4; //magiczna stala?
                 fieldImageName = "zapryskane";
             }
             if (imageName == "sadzarka")
             {
-                main.SetMap3(targetLocation.X, targetLocation.Y, 5);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 5;  //magiczna stala?
                 fieldImageName = "zasiane";
             }
             if (imageName == "rozrzutnik")
             {
-                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 6;  //magiczna stala?
                 fieldImageName = "rozsiane";
             }
             if (warzywo.wzrost < 0 && warzywo.wzrost > -1)
             {
                 imageName = "sadzarka";
-                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 6;  //magiczna stala?
                 fieldImageName = "zasiane";
             }
             if (zboze.wzrost < 0 && zboze.wzrost > -1)
             {
                 imageName = "siewnik";
-                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 6; //magiczna stala?
                 fieldImageName = "zasiane";
             }
 
             if (warzywo.wzrost >= 1)
             {
                 imageName = "kopaczka";
-                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 6;  //magiczna stala?
                 fieldImageName = "zamlocone";
                 warzywo.wzrost = -1;
             }
             if (zboze.wzrost >= 1)
             {
                 imageName = "kombajn";
-                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
+                World.mapa3[new Pos2(targetLocation.X, targetLocation.Y)] = 6;  //magiczna stala?
                 fieldImageName = "zamlocone";
                 zboze.wzrost = -1;
             }

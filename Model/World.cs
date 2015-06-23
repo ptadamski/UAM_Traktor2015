@@ -15,8 +15,12 @@ namespace TraktorProj.Model
             //przechowanie wszystkich obiektow w swiecie
             //symulacje srodowiska
             //detekcje kolizji     
+
+        public static Terrain2 mapa1 = new Terrain2(@".\..\..\mapa1");
+        public static Terrain2 mapa2 = new Terrain2(@".\..\..\mapa2");
+        public static Terrain2 mapa3 = new Terrain2(@".\..\..\mapa3");
              
-        public void Iterate()
+        public void Update()
         {
         }
 

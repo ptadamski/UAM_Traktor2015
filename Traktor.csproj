@@ -66,7 +66,6 @@
     <Compile Include="Algorithms\AStarNode2D.cs" />
     <Compile Include="Algorithms\Heap.cs" />
     <Compile Include="Algorithms\ID3.cs" />
-    <Compile Include="Algorithms\Main.cs" />
     <Compile Include="Algorithms\RAM.cs" />
     <Compile Include="ChwastPos.cs" />
     <Compile Include="Commons\Imagelist.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Interface\IDrawableObject.cs" />
     <Compile Include="Interface\IDrawManager.cs" />
     <Compile Include="MainWindow.cs" />
+    <Compile Include="Model\Terrain.cs" />
     <Compile Include="Model\DrawableObject.cs" />
     <Compile Include="Model\DrawManager.cs" />
     <Compile Include="Model\World.cs" />

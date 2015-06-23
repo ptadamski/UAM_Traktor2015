@@ -78,7 +78,7 @@ namespace TraktorProj
             allTiles = new ArrayList();
 
             controls = new Controls();
-            ChwP = new ChwastPos(drawManager, new Pos2(8,8), "pokrzywa");
+            ChwP = new ChwastPos(drawManager, new Pos2(8,8), "pokrzywa"); //TO DO : smiechuchy => dodac random czy cos
         }
 
         #region Nie chce tego widziec

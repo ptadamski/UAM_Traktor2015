@@ -44,7 +44,7 @@ namespace TraktorProj.Model
 
         public int GetHashCode(Pos2 obj)
         {
-            return posX ^ posY;
+            return obj.posX ^ obj.posY;
         }
 
         public bool Equals(Pos2 other)

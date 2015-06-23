@@ -29,14 +29,10 @@ namespace TraktorProj
         public int targetY;
         public string pora;
         public Point positions;
-        private MainClass main;
         
         public ChwastPos(IDrawManager<Pos2> drawManager, Pos2 location, string image) :
             base(drawManager, location, image)
-        {
-         
-            main = new MainClass();
-           
+        {                                     
             for (int i = 0; i <= 20; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -44,7 +40,10 @@ namespace TraktorProj
             }
             // this.controls = new Controls();
             // istChwast = new int [20][3];
-            //this.istChwast = istChwast;
+            //this.istChwast = istChwast;  
+
+
+
         }
         public int getAvaiableId()
         {
@@ -100,7 +99,7 @@ namespace TraktorProj
 
                                 if (x1 != x || y1 != y)
                                 {
-                                    int TypField = main.GetMap2(x1, y1);
+                                    int TypField = World.mapa2[new Pos2(x1,y1)];
                                     if (TypField != -1 && TypField != 7)
                                     {
                                         //Point p = new Point(x1, y1);
@@ -121,7 +120,8 @@ namespace TraktorProj
 
                 positions = pozycje[idpos];
             }
-            main.SetMap2(Convert.ToInt32(positions.X), Convert.ToInt32(positions.Y));
+
+            World.mapa2[new Pos2(Convert.ToInt32(positions.X), Convert.ToInt32(positions.Y))] = 7; //magiczna stala?
 
 
         }

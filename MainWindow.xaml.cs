@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using TraktorProj.Commons;
 using TraktorProj.Algorithms;
 using System.Collections;
+using TraktorProj.Model;
 
 
 namespace TraktorProj
@@ -126,7 +127,7 @@ namespace TraktorProj
                         int tarX = Int32.Parse(words[1]);
                         int tarY = Int32.Parse(words[2]);
 
-                        if (MainClass.GetMap(tarX, tarY) > 0)
+                        if (World.mapa1[new Pos2(tarX, tarY)] > 0)
                         {
                             ConsoleOutTextBlock.Text += "\r\nOn my way";
                             agent.StartTraktor(Int32.Parse(words[1]), Int32.Parse(words[2]));

@@ -52,7 +52,7 @@ namespace TraktorProj.Commons
         
         public bool createItem(string bitmap)
         {
-            MainClass main = new MainClass();
+            //MainClass main = new MainClass();
             int chwastId = ChwastP.getAvaiableId();
             ChwastP.getPositions(chwastId);
             //ChwastP.generateParam();

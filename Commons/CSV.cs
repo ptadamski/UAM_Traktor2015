@@ -52,7 +52,7 @@ namespace TraktorProj.Commons
                 {
                     for (int i = 0; i < items.Length; i++)
                         table.Columns.Add(new DataColumn(i.ToString()));
-                    reader.BaseStream.Position = 0;
+                    reader = new StreamReader(filePath);
                 }
                 else
                     foreach (var item in items)

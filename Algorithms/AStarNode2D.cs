@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TraktorProj.Model;
 
 namespace TraktorProj.Algorithms
 {             
@@ -49,7 +50,7 @@ namespace TraktorProj.Algorithms
 
         private void AddSuccessor(ArrayList ASuccessors, int AX, int AY, MoveEnum ADIR)
         {
-            int CurrentCost = MainClass.GetMap(AX, AY);
+            int CurrentCost = World.mapa1[new Pos2(AX, AY)];
             if (CurrentCost == -1)
             {
                 return;
