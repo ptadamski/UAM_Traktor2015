@@ -82,6 +82,7 @@
     <Compile Include="MainWindow.cs" />
     <Compile Include="Model\DrawableObject.cs" />
     <Compile Include="Model\DrawManager.cs" />
+    <Compile Include="Model\World.cs" />
     <Compile Include="UIProxy.cs" />
     <Compile Include="Model\Mapa\Pos2.cs" />
     <Compile Include="Model\Model.cs">
@@ -113,7 +114,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\MaszynaRolnicza\Traktor.cs" />
-    <Compile Include="Model\WorldMap.cs" />
     <Compile Include="Model\Zasob\Resource.cs" />
     <Compile Include="Param.cs" />
     <Compile Include="Parametry.cs" />
@@ -187,7 +187,14 @@
   <ItemGroup>
     <Resource Include="Images\burak.png" />
     <Resource Include="Images\cebula.png" />
-    <Resource Include="Images\ziemniak.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fasola.png" />
+    <Resource Include="Images\kapusta.png" />
+    <Resource Include="Images\marchew.png" />
+    <Resource Include="Images\pszenica.png" />
+    <Resource Include="Images\ryz.png" />
+    <Resource Include="Images\rzepa.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

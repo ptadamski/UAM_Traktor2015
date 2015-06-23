@@ -18,15 +18,15 @@ namespace TraktorProj.Commons
         /// NIE TYKAC!!!
         /// </summary>
 
-        private Image TraktorImage;
-        private BitmapImage TraktorBitmap;
+        //private Image TraktorImage;
+        //private BitmapImage TraktorBitmap;
         private ChwastPos ChwastP;
 
         private Image ItemImage;
         private BitmapImage ItemBitmap;
 
-        public int posX;
-        public int posY;
+        //public int posX;
+       // public int posY;
 
         /// <summary>
         /// inicjalizacja
@@ -34,9 +34,9 @@ namespace TraktorProj.Commons
         public Controls()
         {
 
-            ChwastP = new ChwastPos();
-            posX = 1;
-            posY = 1;
+            //ChwastP = new ChwastPos(null,null,null);
+            //posX = 1;
+            //posY = 1;
             try
             {
               
@@ -49,102 +49,6 @@ namespace TraktorProj.Commons
                 Console.WriteLine(exception.ToString());
             }
         }
-
-        /// <summary>
-        /// Poruszanie się między "blokami" na planszy
-        /// </summary>
-        /// <param name="newX">Na którą pozycję X ma przejśc kelner</param>
-        /// <param name="newY">Na którą pozycję Y ma przejśc kelner</param>
-        /// top: move=1, right: move=2, down: move=3, left: move=4
-        public bool Move(int newX, int newY, int move, String bitmap,int targetX,int targetY, string fieldName)
-        {
-            Window window = Application.Current.Windows[0];
-            
-
-                if (window.GetType() == typeof (MainWindow))
-                {
-
-
-                    (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + newX + " " + newY;
-                    Grid.SetColumn((window as MainWindow).TraktorImg, newX);
-                    Grid.SetRow((window as MainWindow).TraktorImg, newY);
-                    Grid.SetZIndex((window as MainWindow).TraktorImg, 1000);
-                    TraktorImage = new Image();
-                    TraktorBitmap = new BitmapImage();
-                    TraktorBitmap.BeginInit();
-                    TraktorBitmap.UriSource = new Uri("/Images/"+bitmap+".png", UriKind.Relative);
-               //     TraktorImage.UpdateLayout();
-                    if (move == 1)
-                    {
-                        TraktorBitmap.Rotation = Rotation.Rotate270;
-                    }
-                    else if (move == 2)
-                    {
-                        //TraktorBitmap.Rotation = Rotation.Rotate90;
-
-                    }
-                    else if (move == 3)
-                    {
-                        TraktorBitmap.Rotation = Rotation.Rotate90;
-
-                    }
-                    else if (move == 4)
-                    {
-                        TraktorBitmap.Rotation = Rotation.Rotate180;    
-                    }
-                    
-                    TraktorBitmap.EndInit();
-                    TraktorImage.Stretch = Stretch.UniformToFill;
-                    TraktorImage.Source = TraktorBitmap;
-
-
-                    (window as MainWindow).TraktorImg.Source = TraktorImage.Source;
-
-                    
-
-                   
-                   
-                }
-            
-            posX = newX;
-            posY = newY;
-
-            if (posX == targetX && posY == targetY)
-            {
-                if(targetX!=1 && targetY!=1)
-                (window as MainWindow).setTile(targetX, targetY, fieldName);
-            }
-            
-
-            return true;
-        }
-
-        public void changeBitmap()
-        {
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(MainWindow))
-                {
-
-
-                    TraktorImage = new Image();
-                    TraktorBitmap = new BitmapImage();
-                    TraktorBitmap.BeginInit();
-                    TraktorBitmap.UriSource = new Uri("/Images/field1.png", UriKind.Relative);
-                   
-
-                    TraktorBitmap.EndInit();
-                    TraktorImage.Stretch = Stretch.UniformToFill;
-                    TraktorImage.Source = TraktorBitmap;
-
-
-                    (window as MainWindow).TraktorImg.Source = TraktorImage.Source;
-
-                }
-            }
-           
-        }
-
         
         public bool createItem(string bitmap)
         {
@@ -243,67 +147,9 @@ namespace TraktorProj.Commons
 
                     chw.Source = ItemImage.Source;
 
-                }
+                }    
            
             return true;
-        }
-
-        /// <summary>
-        /// Niech traktor porusza się w prawo o jedno pole
-        /// </summary>
-        public void TractorMooveRight(string bitmap, int targetX, int targetY, String fieldName)
-        {
-           
-            if (posX < 16)
-            {
-                Move(posX + 1, posY, 2, bitmap, targetX, targetY, fieldName);
-                
-                        
-            }
-        }
-
-        public void TractorMoveTo(int targetX, int targetY)
-        {
-            //AStar.goTo(posX, posY, 5, 5);
-        }
-
-        /// <summary>
-        /// Niech traktor porusza się w lewo o jedno pole
-        /// </summary>
-        public void TractorMooveLeft(string bitmap, int targetX, int targetY, String fieldName)
-        {
-
-            if (posX > 0)
-            {
-                Move(posX - 1, posY, 4, bitmap, targetX, targetY, fieldName);
-
-              
-            }
-        }
-
-        /// <summary>
-        /// Niech traktor porusza się w górę o jedno pole
-        /// </summary>
-        public void TractorMooveUp(string bitmap, int targetX, int targetY, String fieldName)
-        {
-
-            if (posY > 1)
-            {
-                Move(posX, posY - 1, 1, bitmap, targetX, targetY,fieldName);
-
-            }
-        }
-        
-        /// <summary>
-        /// Niech traktor porusza się w dół o jedno pole
-        /// </summary>
-        public void TractorMooveDown(string bitmap, int targetX, int targetY, String fieldName)
-        {
-
-            if (posY < 10)
-            {
-                Move(posX, posY + 1, 3, bitmap, targetX, targetY, fieldName); 
-            }
-        }
+        }   
     }
 }

@@ -25,20 +25,20 @@ namespace TraktorProj.Algorithms
                 return FY;
             }
         }
-        private int FY;
+        private int FY; 
 
-        public int DIR
+
+        private MoveEnum FDIR;
+
+        public MoveEnum DIR
         {
             get
             {
                 return FDIR;
             }
         }
-        private int FDIR;
 
-
-
-        public AStarNode2D(AStarNode AParent, AStarNode AGoalNode, double ACost, int AX, int AY, int ADIR)
+        public AStarNode2D(AStarNode AParent, AStarNode AGoalNode, double ACost, int AX, int AY, MoveEnum ADIR)
             : base(AParent, AGoalNode, ACost)
         {
             FX = AX;
@@ -47,7 +47,7 @@ namespace TraktorProj.Algorithms
         }
 
 
-        private void AddSuccessor(ArrayList ASuccessors, int AX, int AY, int ADIR)
+        private void AddSuccessor(ArrayList ASuccessors, int AX, int AY, MoveEnum ADIR)
         {
             int CurrentCost = MainClass.GetMap(AX, AY);
             if (CurrentCost == -1)
@@ -90,13 +90,13 @@ namespace TraktorProj.Algorithms
         public override void GetSuccessors(ArrayList ASuccessors)
         {
             ASuccessors.Clear();
-            AddSuccessor(ASuccessors, FX - 1, FY, 3);
+            AddSuccessor(ASuccessors, FX - 1, FY, MoveEnum.Left);
 
-            AddSuccessor(ASuccessors, FX, FY - 1, 0);
+            AddSuccessor(ASuccessors, FX, FY - 1, MoveEnum.Up);
 
-            AddSuccessor(ASuccessors, FX + 1, FY, 1);
+            AddSuccessor(ASuccessors, FX + 1, FY, MoveEnum.Right);
 
-            AddSuccessor(ASuccessors, FX, FY + 1, 2);
+            AddSuccessor(ASuccessors, FX, FY + 1, MoveEnum.Down);
 
         }
 

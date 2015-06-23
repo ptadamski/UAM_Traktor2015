@@ -60,7 +60,7 @@ namespace TraktorProj
                     Random random = new Random();
                     int posx = random.Next(1, 13);
                     int posy = random.Next(1, 10);
-                    setTile(posx, posy,"field3");
+                    //setTile(posx, posy,"field3");
                 }
                 else if (ConsoleInTextBox.Text.Contains("rem"))
                 {
@@ -80,19 +80,19 @@ namespace TraktorProj
 
                 else if (ConsoleInTextBox.Text == "left")
                 {
-                    controls.TractorMooveLeft("tractor",1,1,"");
+                    agent.MoveBy(MoveEnum.Left);
                 }
                 else if (ConsoleInTextBox.Text == "right")
                 {
-                    controls.TractorMooveRight("tractor",1,1,"");
+                    agent.MoveBy(MoveEnum.Right);
                 }
-                else if (ConsoleInTextBox.Text == "down")    
+                else if (ConsoleInTextBox.Text == "down")
                 {
-                    controls.TractorMooveDown("tractor",1,1,"");
+                    agent.MoveBy(MoveEnum.Down);
                 }
                 else if (ConsoleInTextBox.Text == "up")
                 {
-                    controls.TractorMooveUp("tractor", 1, 1, "");
+                    agent.MoveBy(MoveEnum.Up);
                 }
 
                 else if (ConsoleInTextBox.Text == "generate")
@@ -161,20 +161,20 @@ namespace TraktorProj
         {
 
              if (e.Key == Key.Right)
-            {
-                controls.TractorMooveRight("tractor", 1, 1, "");
+             {
+                 agent.MoveBy(MoveEnum.Right);
             }
             if (e.Key == Key.Left)
             {
-                controls.TractorMooveLeft("tractor", 1, 1, "");
+                agent.MoveBy(MoveEnum.Left);
             }
             if (e.Key == Key.Up)
             {
-                controls.TractorMooveUp("tractor", 1, 1, "");
+                agent.MoveBy(MoveEnum.Up);
             }
             if (e.Key == Key.Down)
             {
-                controls.TractorMooveDown("tractor", 1, 1, "");
+                agent.MoveBy(MoveEnum.Down);
             }
         }
 

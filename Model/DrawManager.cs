@@ -38,6 +38,11 @@ namespace TraktorProj.Model
             uiProxy.Remove(child);
         }
 
+        public void Update(IDrawableObject<Pos2> child) 
+        {
+            uiProxy.Update(child, child.Location.X, child.Location.Y);
+        }
+
         #endregion
 
         public class Args

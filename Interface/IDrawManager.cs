@@ -15,5 +15,7 @@ namespace TraktorProj.Interface
         void Add(IDrawableObject<_Location> child);
 
         void Remove(IDrawableObject<_Location> child);
+
+        void Update(IDrawableObject<_Location> child);
     }
 }

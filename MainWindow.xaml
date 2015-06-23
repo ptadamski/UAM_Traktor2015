@@ -216,8 +216,6 @@
 
 
         <!-- traktor -->
-        <Image Name="TraktorImg" Grid.Column="1" Grid.Row="1"  Source="/Images/tractor.png" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
-
 
         <Image Name="chwast1" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>
         <Image Name="chwast2" HorizontalAlignment="Left" Height="60" VerticalAlignment="Stretch" Width="60"/>

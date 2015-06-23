@@ -16,60 +16,32 @@ using TraktorProj.Interface;
 
 namespace TraktorProj
 {
-    class Traktor
+
+    public enum MoveEnum { None=-1, Up=0, Right=1, Down=2, Left=3 }
+
+    public class Traktor : DrawableObject
     {
 
         private Controls controls;
-        private static Traktor traktor;
-        private int targetX = 1;
-        private int targetY = 1;
+        private Pos2 targetLocation;
+                                        
+        private string imageName = "";
+        private string fieldImageName = "";
         private string pora;
-        private string imageName;
-        private string fieldImageName;
         private MainClass main = new MainClass();
         private int order = 0;
         int i = 0;
         Parametry zboze = new Parametry(TraktorProj.Parametry.RodzajUprawy.zboze);
         Parametry warzywo = new Parametry(TraktorProj.Parametry.RodzajUprawy.warzywo);
-        DrawableObject buraczek;
 
-        //public static Traktor Instance
-        //{
-        //    get
-        //    {
-        //        return traktor = traktor ?? new Traktor("tractor");
-        //    }
-        //}
+        Queue<MoveEnum> movementQueue;
 
-        private IDrawManager<Pos2> drawManager;
-
-        public Traktor(IDrawManager<Pos2> drawManager, string imageName)
+        public Traktor(IDrawManager<Pos2> drawManager, Pos2 location, string name) :
+            base(drawManager, location, name)
         {
             this.controls = new Controls();
-            this.imageName = imageName;
-            this.drawManager = drawManager;
-            this.buraczek = new DrawableObject(drawManager, new Pos2(6, 6), "burak");
+            this.targetLocation = new Pos2(location.X, location.Y);//nowy obiekt, chyba ze Pos2 bedzie struktura
         }
-
-
-        private void Update() 
-        {
-            DataTable t_uprawy = new CSV(@"..\..\MapaUpraw", ',', true).Table;
-            DataTable t_atlas = new CSV(@"..\..\Atlas",',',true).Table;
-
-            //chce wczytac uprawy jako zboza i warzywa
-
-            var katalog = new Dictionary<string, string>();
-            //z altasu wyczytaj co jest warzywem a co zbozem
-
-            //foreach (var item in t_atlas.Rows)
-            //{
-            //    item
-           // }
-            
-
-        }
-
 
         public void PoryRokuStart()
         {
@@ -80,18 +52,14 @@ namespace TraktorProj
             Thread.Sleep(15000);
             (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + "jesien";
             Thread.Sleep(15000);
-            
+
         }
-
-
 
         public void StartTraktor(int x, int y)
         {
-            targetX = x;
-            targetY = y;
+            targetLocation.X = x;
+            targetLocation.Y = y;
             InitThread();
-
-
         }
 
         public void StartTraktor(string p)
@@ -110,7 +78,6 @@ namespace TraktorProj
 
         private void TraktorThread()
         {
-            buraczek.Dispose();
             i++;
 
             if (i % 3 == 0)
@@ -118,85 +85,72 @@ namespace TraktorProj
                 generateHeight();
                 i = 0;
             }
-           //  while(true){
-            // generateParam();
-           
-           // if (controls.posX > 1 && controls.posY > 1)
-            //{
-               // targetY = targetX = 1;
-            //    go();
-            //    Thread.Sleep(6000);
-            //}
 
-            //
-            //zboze.zaorane = "tak";
-
-            
-            //RunID3();
+            RunID3();
             if (imageName == "kombajn")
             {
-                main.SetMap3(targetX, targetY, 1);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 1);
                 fieldImageName = "zamlocone";
             }
             if (imageName == "brona")
             {
-                main.SetMap3(targetX, targetY, 2);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 2);
                 fieldImageName = "zabronowane";
             }
             if (imageName == "plug")
             {
-                main.SetMap3(targetX, targetY, 3);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 3);
                 fieldImageName = "zaorane";
             }
             if (imageName == "deszczownia")
             {
-                main.SetMap3(targetX, targetY, 4);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 4);
                 fieldImageName = "zapryskane";
             }
             if (imageName == "sadzarka")
             {
-                main.SetMap3(targetX, targetY, 5);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 5);
                 fieldImageName = "zasiane";
             }
             if (imageName == "rozrzutnik")
             {
-                main.SetMap3(targetX, targetY, 6);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
                 fieldImageName = "rozsiane";
             }
-            if (warzywo.wzrost < 0 && warzywo.wzrost>-1)
+            if (warzywo.wzrost < 0 && warzywo.wzrost > -1)
             {
                 imageName = "sadzarka";
-                main.SetMap3(targetX, targetY, 6);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
                 fieldImageName = "zasiane";
             }
-            if (zboze.wzrost <0 && zboze.wzrost>-1)
+            if (zboze.wzrost < 0 && zboze.wzrost > -1)
             {
                 imageName = "siewnik";
-                main.SetMap3(targetX, targetY, 6);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
                 fieldImageName = "zasiane";
             }
 
             if (warzywo.wzrost >= 1)
             {
                 imageName = "kopaczka";
-                main.SetMap3(targetX, targetY, 6);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
                 fieldImageName = "zamlocone";
                 warzywo.wzrost = -1;
             }
-            if (zboze.wzrost >=1)
+            if (zboze.wzrost >= 1)
             {
                 imageName = "kombajn";
-                main.SetMap3(targetX, targetY, 6);
+                main.SetMap3(targetLocation.X, targetLocation.Y, 6);
                 fieldImageName = "zamlocone";
                 zboze.wzrost = -1;
             }
 
-            go();
-           // Traktor.Instance.zmienPole(targetX, targetY, fieldImageName);
-           
+            findPath();
+            // Traktor.Instance.zmienPole(targetLocation.X, targetLocation.Y, fieldImageName);
+
 
             Thread.Sleep(1000);
-            //targetY = targetX = 1;
+            //targetLocation.Y = targetLocation.X = 1;
             //go();
 
             // }          
@@ -265,14 +219,13 @@ namespace TraktorProj
 
         }
 
-        private void go()
+        private void findPath()
         {
-            
             /* AStar */
             AStar astar = new AStar();
 
-            AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetX, targetY, 0);
-            AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, controls.posX, controls.posY, 1);
+            AStarNode2D GoalNode = new AStarNode2D(null, null, 1, targetLocation.X, targetLocation.Y, 0);
+            AStarNode2D StartNode = new AStarNode2D(null, GoalNode, 1, Location.X, Location.Y, MoveEnum.Right);
             StartNode.GoalNode = GoalNode;
 
             astar.FindPath(StartNode, GoalNode);
@@ -282,40 +235,8 @@ namespace TraktorProj
 
             foreach (AStarNode2D point in astar.Solution)
             {
-
-                int dir = point.DIR;
                 Thread.Sleep(600);
-
-
-                if (dir == 3)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveLeft(imageName,targetX,targetY,fieldImageName)));
-                }
-                else if (dir == 1)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveRight(imageName, targetX, targetY, fieldImageName)));
-                }
-                else if (dir == 2)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveDown(imageName, targetX, targetY, fieldImageName)));
-                }
-                else if (dir == 0)
-                {
-                    Application.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => controls.TractorMooveUp(imageName, targetX, targetY, fieldImageName)));
-
-                }
-
-
-
-
+                MoveBy(point.DIR);
             }
         }
 
@@ -324,6 +245,7 @@ namespace TraktorProj
         /// </summary>
         private void RunID3()
         {
+            return;
             List<string> treeList = new List<string>();
             List<Parametry> orderList = new List<Parametry>();
             orderList.Clear();
@@ -340,11 +262,11 @@ namespace TraktorProj
 
 
             treeList = id3Sample.GenerateTree();
-            //if (targetX != 1 || targetY != 1)
+            //if (targetLocation.X != 1 || targetLocation.Y != 1)
             //{
             //    Thread.Sleep(1000);
-            //    targetY = 1;
-            //    targetX = 1;
+            //    targetLocation.Y = 1;
+            //    targetLocation.X = 1;
             //    return;
             //}
             if (order < orderList.Count - 1)
@@ -368,9 +290,9 @@ namespace TraktorProj
                                     {
                                         if (treeList[zz].Contains(":"))
                                         {
-                                            targetX = orderList[order].poleX;
-                                            targetY = orderList[order].poleY;
-                                           
+                                            targetLocation.X = orderList[order].poleX;
+                                            targetLocation.Y = orderList[order].poleY;
+
                                             string maszyna = treeList[zz].Split(':')[1];
                                             orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                             imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -384,8 +306,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -398,8 +320,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -415,8 +337,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -429,8 +351,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -446,8 +368,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -460,8 +382,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -477,8 +399,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -491,8 +413,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -508,8 +430,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -522,8 +444,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -538,8 +460,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 2].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 2].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -552,8 +474,8 @@ namespace TraktorProj
                                             {
                                                 if (treeList[zz + 4].Contains(":"))
                                                 {
-                                                    targetX = orderList[order].poleX;
-                                                    targetY = orderList[order].poleY;
+                                                    targetLocation.X = orderList[order].poleX;
+                                                    targetLocation.Y = orderList[order].poleY;
                                                     string maszyna = treeList[zz + 4].Split(':')[1];
                                                     orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                     imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -579,8 +501,8 @@ namespace TraktorProj
                                                     {
                                                         if (treeList[z].Contains(":"))
                                                         {
-                                                            targetX = orderList[order].poleX;
-                                                            targetY = orderList[order].poleY;
+                                                            targetLocation.X = orderList[order].poleX;
+                                                            targetLocation.Y = orderList[order].poleY;
                                                             string maszyna = treeList[z].Split(':')[1];
                                                             orderList[order].maszyna = maszyna.Substring(0, maszyna.Length - 1);
                                                             imageName = maszyna.Substring(0, maszyna.Length - 1);
@@ -603,7 +525,7 @@ namespace TraktorProj
                 }
             }
 
-           
+
         }
 
         private void changeParameter(string maszyna, Parametry p)
@@ -651,15 +573,25 @@ namespace TraktorProj
             }
         }
 
-        public void zmienPole(int x, int y, string field)
-        {
-            Window window = Application.Current.Windows[0];
 
-            if (window.GetType() == typeof(MainWindow))
+        public void MoveBy(MoveEnum e)
+        {
+            //powinno przejsc przez srodowisko, zeby sprawdzic czy ruch jest dopuszczalny
+            switch (e)
             {
-                (window as MainWindow).setTile(x, y, field);
+                case MoveEnum.Up: Location.Y -= 1;
+                    break;
+                case MoveEnum.Down: Location.Y += 1;
+                    break;
+                case MoveEnum.Left: Location.X -= 1;
+                    break;
+                case MoveEnum.Right: Location.X += 1;
+                    break;
             }
+            drawManager.Update(this);
         }
+
+
     }
 }
 

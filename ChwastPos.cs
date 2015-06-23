@@ -9,12 +9,14 @@ using TraktorProj.Commons;
 using TraktorProj.ID3Algorithm;
 using System.Threading;
 using System.Windows;
+using TraktorProj.Model;
+using TraktorProj.Interface;
 
 
 
 namespace TraktorProj
 {
-    class ChwastPos
+    class ChwastPos : DrawableObject
     {
         Param wiosna = new Param(TraktorProj.Param.PoraRoku.wiosna);
         Param lato = new Param(TraktorProj.Param.PoraRoku.lato);
@@ -29,7 +31,8 @@ namespace TraktorProj
         public Point positions;
         private MainClass main;
         
-        public ChwastPos()
+        public ChwastPos(IDrawManager<Pos2> drawManager, Pos2 location, string image) :
+            base(drawManager, location, image)
         {
          
             main = new MainClass();
@@ -151,7 +154,7 @@ namespace TraktorProj
             generateParam();
             RunID3();
             addChwast(aid, targetX, targetY, 1);
-            (window as MainWindow).setTile(targetX, targetY, "plug");
+            //(window as MainWindow).setTile(targetX, targetY, "plug");
             //con.setTile(targetX, targetY, 'plug');
 
 

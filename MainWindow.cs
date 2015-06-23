@@ -43,6 +43,7 @@ namespace TraktorProj
         private static string AgentImageName = @"tractor";
                            
         private Traktor agent;
+        private static Pos2 startPosition = new Pos2(1, 1);
 
         private UIProxy uiProxy;
 
@@ -64,7 +65,7 @@ namespace TraktorProj
         {
             this.uiProxy = new UIProxy(this as IImageFactoryInvoker, this as IImageBoundry);                       
             this.drawManager = new DrawManager(this.uiProxy, new DrawManager.Args(60, 60, @"/Images", "png"));                         
-            this.agent = new Traktor(drawManager, AgentImageName);   
+            this.agent = new Traktor(drawManager, startPosition, AgentImageName);   
   
             this.comandsList = new List<string>();
             this.comandsList.Add("clear - clear console");
@@ -77,10 +78,21 @@ namespace TraktorProj
             allTiles = new ArrayList();
 
             controls = new Controls();
-            ChwP = new ChwastPos();
-        }               
+            ChwP = new ChwastPos(drawManager, new Pos2(8,8), "pokrzywa");
+        }
 
-        public void setTile(int posx, int posy, string sprite)
+        #region Nie chce tego widziec
+
+        public void clearTile(int posx, int posy)
+        {
+            int find = posTiles[posx, posy];
+            Image ItemTemp = new Image();
+            ItemTemp = (Image)allTiles[find];
+            this.MainGrid.Children.Remove(ItemTemp);
+            ConsoleOutTextBlock.Text += "\r\n> " + "usunieto pole " + posx + " " + posy; 
+        }
+
+        /*public void setTile(int posx, int posy, string sprite)
         {
             posTiles[posx, posy] = maxTiles;
             ConsoleOutTextBlock.Text += "\r\n> " + "nowe pole " + posx + " " + posy;
@@ -106,16 +118,8 @@ namespace TraktorProj
 
             maxTiles++;
 
-        }
-
-        public void clearTile(int posx, int posy)
-        {
-            int find = posTiles[posx, posy];
-            Image ItemTemp = new Image();
-            ItemTemp = (Image)allTiles[find];
-            this.MainGrid.Children.Remove(ItemTemp);
-            ConsoleOutTextBlock.Text += "\r\n> " + "usunieto pole " + posx + " " + posy; 
-        }
+        }//*/
+        #endregion
 
         void IImageBoundry.Add(object sender)
         {
@@ -131,8 +135,8 @@ namespace TraktorProj
         void IImageBoundry.Update(object sender, int posx, int posy)
         {
             var e = images[sender];
-            Grid.SetColumn(e, posy);
-            Grid.SetRow(e, posx);
+            Grid.SetColumn(e, posx);
+            Grid.SetRow(e, posy);
         }
     }
 }

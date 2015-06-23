@@ -11,33 +11,33 @@ namespace TraktorProj.Model
 {
     public class DrawableObject : IDrawableObject<Pos2>, IDisposable
     {
-        public DrawableObject(IDrawManager<Pos2> drawManager, Pos2 location, string name)
+        public DrawableObject(IDrawManager<Pos2> drawManager, Pos2 location, string image)
         {
             this.drawManager = drawManager;
-            this.name = name;
+            this.image = image;
             this.location = location;
-            drawManager.BindImage(this,name);
+            drawManager.BindImage(this,image);
             drawManager.Add(this);
         }
 
         public DrawableObject(IDrawManager<Pos2> drawManager, int positionX, int positionY, string name)
         {
             this.drawManager = drawManager;
-            this.name = name;
+            this.image = name;
             this.location = new Pos2(positionX, positionY);
             drawManager.BindImage(this, name);
             drawManager.Add(this);
         }
 
-        private string name;
+        protected string image;
 
-        private IDrawManager<Pos2> drawManager;
+        protected IDrawManager<Pos2> drawManager;
 
         #region IDrawable impl
 
         public void Draw()  {}
 
-        private Pos2 location;
+        protected Pos2 location;
 
         public Pos2 Location
         {
