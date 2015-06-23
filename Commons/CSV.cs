@@ -38,25 +38,35 @@ namespace TraktorProj.Commons
         {
             StreamReader reader = new StreamReader(filePath);
 
+            if (reader.EndOfStream)
+                return;
+
             string line;
             table.Clear();
+
+            if ((line = reader.ReadLine()) != null)
+            {
+                var items = line.Split(separator);
+
+                if (!header)
+                {
+                    for (int i = 0; i < items.Length; i++)
+                        table.Columns.Add(new DataColumn(i.ToString()));
+                    reader.BaseStream.Position = 0;
+                }
+                else
+                    foreach (var item in items)
+                        table.Columns.Add(new DataColumn(item.Trim()));
+
+            }
+
 
             while ((line = reader.ReadLine()) != null)
             {
                 var items = line.Split(separator);
-
-                if (header)  //TO DO : columny zawsze powinny byc dodawane, w tym ukladzie nie sa
-                {
-                    for (int i = 0, length = items.Length; i < length; i++)
-                        table.Columns.Add(new DataColumn(items[i]));
-                    header = false;
-                }
-                else
-                {
-                    var row = table.NewRow();
-                    row.ItemArray = items;
-                    table.Rows.Add(row);
-                }
+                var row = table.NewRow();
+                row.ItemArray = items;
+                table.Rows.Add(row);
             }
 
             reader.Close();

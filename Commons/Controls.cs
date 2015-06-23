@@ -18,8 +18,8 @@ namespace TraktorProj.Commons
         /// NIE TYKAC!!!
         /// </summary>
 
-        private Image image;
-        private BitmapImage sprite;
+        private Image TraktorImage;
+        private BitmapImage TraktorBitmap;
         private ChwastPos ChwastP;
 
         private Image ItemImage;
@@ -58,51 +58,62 @@ namespace TraktorProj.Commons
         /// top: move=1, right: move=2, down: move=3, left: move=4
         public bool Move(int newX, int newY, int move, String bitmap,int targetX,int targetY, string fieldName)
         {
-            MainWindow window = Application.Current.Windows[0] as MainWindow;
+            Window window = Application.Current.Windows[0];
             
 
                 if (window.GetType() == typeof (MainWindow))
                 {
-                    window.ConsoleOutTextBlock.Text += "\r\n> " + newX + " " + newY;
-                    Grid.SetColumn(window.TraktorImg, newX);
-                    Grid.SetRow(window.TraktorImg, newY);
-                    Grid.SetZIndex(window.TraktorImg, 1000);
-                    //var image = new Image();
-                    //BitmapImage sprite = new BitmapImage();
-                    //sprite.BeginInit();
-                    //sprite.UriSource = new Uri("/Images/" + bitmap + ".png", UriKind.Relative);
-                    //     TraktorImage.UpdateLayout();
 
-                    Rotation rot = Rotation.Rotate0;
+
+                    (window as MainWindow).ConsoleOutTextBlock.Text += "\r\n> " + newX + " " + newY;
+                    Grid.SetColumn((window as MainWindow).TraktorImg, newX);
+                    Grid.SetRow((window as MainWindow).TraktorImg, newY);
+                    Grid.SetZIndex((window as MainWindow).TraktorImg, 1000);
+                    TraktorImage = new Image();
+                    TraktorBitmap = new BitmapImage();
+                    TraktorBitmap.BeginInit();
+                    TraktorBitmap.UriSource = new Uri("/Images/"+bitmap+".png", UriKind.Relative);
+               //     TraktorImage.UpdateLayout();
                     if (move == 1)
                     {
-                        rot = Rotation.Rotate270;
+                        TraktorBitmap.Rotation = Rotation.Rotate270;
+                    }
+                    else if (move == 2)
+                    {
+                        //TraktorBitmap.Rotation = Rotation.Rotate90;
+
                     }
                     else if (move == 3)
                     {
-                        rot = Rotation.Rotate90;
+                        TraktorBitmap.Rotation = Rotation.Rotate90;
 
                     }
                     else if (move == 4)
                     {
-                        rot = Rotation.Rotate180;
+                        TraktorBitmap.Rotation = Rotation.Rotate180;    
                     }
+                    
+                    TraktorBitmap.EndInit();
+                    TraktorImage.Stretch = Stretch.UniformToFill;
+                    TraktorImage.Source = TraktorBitmap;
 
-                    //sprite.EndInit();
-                    //image.Stretch = Stretch.UniformToFill;
-                    //image.Source = sprite;
-                    //window.TraktorImg.Source = sprite.Source;
-                    window.setTile(newX, newY, bitmap, rot);
+
+                    (window as MainWindow).TraktorImg.Source = TraktorImage.Source;
+
+                    
+
+                   
+                   
                 }
             
             posX = newX;
             posY = newY;
 
-            //if (posX == targetX && posY == targetY)
-            //{
-            //    //if (targetX != 1 && targetY != 1) ;
-            //   // window.setTile(targetX, targetY, fieldName);
-            //}
+            if (posX == targetX && posY == targetY)
+            {
+                if(targetX!=1 && targetY!=1)
+                (window as MainWindow).setTile(targetX, targetY, fieldName);
+            }
             
 
             return true;
@@ -116,18 +127,18 @@ namespace TraktorProj.Commons
                 {
 
 
-                    image = new Image();
-                    sprite = new BitmapImage();
-                    sprite.BeginInit();
-                    sprite.UriSource = new Uri("/Images/field1.png", UriKind.Relative);
+                    TraktorImage = new Image();
+                    TraktorBitmap = new BitmapImage();
+                    TraktorBitmap.BeginInit();
+                    TraktorBitmap.UriSource = new Uri("/Images/field1.png", UriKind.Relative);
                    
 
-                    sprite.EndInit();
-                    image.Stretch = Stretch.UniformToFill;
-                    image.Source = sprite;
+                    TraktorBitmap.EndInit();
+                    TraktorImage.Stretch = Stretch.UniformToFill;
+                    TraktorImage.Source = TraktorBitmap;
 
 
-                    (window as MainWindow).TraktorImg.Source = image.Source;
+                    (window as MainWindow).TraktorImg.Source = TraktorImage.Source;
 
                 }
             }

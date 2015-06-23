@@ -77,6 +77,13 @@
     <Compile Include="Algorithms\GA\GeneticAlgorithm.cs" />
     <Compile Include="Algorithms\GA\Individual.cs" />
     <Compile Include="Algorithms\GA\Interfaces.cs" />
+    <Compile Include="Interface\IDrawableObject.cs" />
+    <Compile Include="Interface\IDrawManager.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="Model\DrawableObject.cs" />
+    <Compile Include="Model\DrawManager.cs" />
+    <Compile Include="UIProxy.cs" />
+    <Compile Include="Model\Mapa\Pos2.cs" />
     <Compile Include="Model\Model.cs">
       <SubType>
       </SubType>
@@ -106,6 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\MaszynaRolnicza\Traktor.cs" />
+    <Compile Include="Model\WorldMap.cs" />
     <Compile Include="Model\Zasob\Resource.cs" />
     <Compile Include="Param.cs" />
     <Compile Include="Parametry.cs" />
@@ -175,6 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\rozsiane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\burak.png" />
+    <Resource Include="Images\cebula.png" />
+    <Resource Include="Images\ziemniak.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

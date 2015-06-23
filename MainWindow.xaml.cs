@@ -25,97 +25,12 @@ namespace TraktorProj
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        private Controls controls;
-
-        //Imagelist<Image> allTiles = new Imagelist<Image>();
-        private ArrayList allTiles;
-        private ChwastPos ChwP;
-        private int maxTiles;
-        private int[,] posTiles = new int[20, 20];
-        
-        private List<string> comandsList;
-        Traktor traktor;
-
+    {                            
         public MainWindow()
         {
             InitializeComponent();
-            maxTiles = 0;
-
-            traktor = new Traktor(this, "tractor");
-            //Image[] allTiles = new Image[1000];
-            allTiles = new ArrayList();
-
-            //controls = new Controls();
-            ChwP = new ChwastPos();
-        
-
-            comandsList = new List<string>();
-            comandsList.Add("clear - clear console");
-            comandsList.Add("start - start");
-            comandsList.Add("help - display help");
+            Init();
         }
-
-        public void setTile(int posx, int posy, string sprite, Rotation rot = Rotation.Rotate0)
-        {
-            //ConsoleOutTextBlock.Text += string.Format("\r\n> {0} {1}", posx, posy);
-            Grid.SetColumn(TraktorImg, posx);
-            Grid.SetRow(TraktorImg, posy);
-            Grid.SetZIndex(TraktorImg, 1000);
-            var image = new Image();
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("/Images/" + sprite + ".png", UriKind.Relative);   
-            bitmap.Rotation = rot;
-            image.UpdateLayout();
-
-            bitmap.EndInit();
-            image.Stretch = Stretch.UniformToFill;
-            image.Source = bitmap;
-
-
-            TraktorImg.Source = image.Source;
-
-            //posTiles[posx, posy] = maxTiles;
-            //ConsoleOutTextBlock.Text += "\r\n> " + "nowe pole " + posx + " " + posy;
-
-            //BitmapImage ItemBitmap;
-            //Image ItemTemp = new Image();
-
-
-            //ItemTemp.Width = 60;
-            //ItemTemp.Height = 60;
-            //Window window = Application.Current.Windows[0];
-
-            //ItemBitmap = new BitmapImage();
-            //ItemBitmap.BeginInit();
-            //ItemBitmap.UriSource = new Uri("/Images/" + sprite + ".png", UriKind.Relative);
-
-            //ItemBitmap.EndInit();
-            //ItemTemp.Stretch = Stretch.UniformToFill;
-            //ItemTemp.Source = ItemBitmap;
-            //(window as MainWindow).MainGrid.Children.Add(ItemTemp);
-            //Grid.SetRow(ItemTemp, posy);
-            //Grid.SetColumn(ItemTemp, posx);
-
-            //allTiles.Add((Image)ItemTemp);
-
-            //maxTiles++;
-
-        }
-        public void clearTile(int posx, int posy)
-        {
-            Window window = Application.Current.Windows[0];
-            int find = posTiles[posx, posy];
-            Image ItemTemp = new Image();
-            ItemTemp = (Image)allTiles[find];
-            (window as MainWindow).MainGrid.Children.Remove(ItemTemp);
-            ConsoleOutTextBlock.Text += "\r\n> " + "usunieto pole " + posx + " " + posy;
-           // (window as MainWindow).MainGrid.Children.Remove(allTiles[find]);
-            
-
-        }
-
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {                                        
@@ -131,7 +46,7 @@ namespace TraktorProj
                 {
                     String[] s = ConsoleInTextBox.Text.Split(':');
                     ConsoleOutTextBlock.Text += "\r\n> " + "started";
-                    traktor.StartTraktor(s[1]);
+                    agent.StartTraktor(s[1]);
                 }
                 else if(ConsoleInTextBox.Text == "help")
                 {
@@ -145,7 +60,7 @@ namespace TraktorProj
                     Random random = new Random();
                     int posx = random.Next(1, 13);
                     int posy = random.Next(1, 10);
-                    //setTile(posx, posy,"field3");
+                    setTile(posx, posy,"field3");
                 }
                 else if (ConsoleInTextBox.Text.Contains("rem"))
                 {
@@ -183,12 +98,12 @@ namespace TraktorProj
                 else if (ConsoleInTextBox.Text == "generate")
                 {
                     ConsoleOutTextBlock.Text += "\r\n> " + "generated";
-                    traktor.generateParam();
+                    agent.generateParam();
                     
                 }
                 else if (ConsoleInTextBox.Text == "rozpocznij")
                 {
-                    traktor.PoryRokuStart();
+                    agent.PoryRokuStart();
                     
                 }
                 else if (ConsoleInTextBox.Text.Contains("chwast"))
@@ -200,7 +115,7 @@ namespace TraktorProj
                 else if (ConsoleInTextBox.Text.Contains("losuj"))
                 {
                     ConsoleOutTextBlock.Text += "\r\nlosuje";
-                    traktor.LosujPos();
+                    agent.LosujPos();
                 }
                 else if (ConsoleInTextBox.Text.Contains("go"))
                 {
@@ -214,7 +129,7 @@ namespace TraktorProj
                         if (MainClass.GetMap(tarX, tarY) > 0)
                         {
                             ConsoleOutTextBlock.Text += "\r\nOn my way";
-                            traktor.StartTraktor(Int32.Parse(words[1]), Int32.Parse(words[2]));
+                            agent.StartTraktor(Int32.Parse(words[1]), Int32.Parse(words[2]));
                         }
                         else
                         {
@@ -242,12 +157,10 @@ namespace TraktorProj
             //Keyboard.Focus(MainGrid);
         }
 
-        
-
         private void MainWindowKeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Right)
+             if (e.Key == Key.Right)
             {
                 controls.TractorMooveRight("tractor", 1, 1, "");
             }
